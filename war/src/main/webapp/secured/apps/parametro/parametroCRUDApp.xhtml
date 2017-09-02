@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ai="http://java.sun.com/jsf/composite/composite/ai"
+	xmlns:sec="http://www.springframework.org/security/tags">
+ 
+ 	<ai:panelGridApp>
+		 
+		 	<ui:remove>DESCRICAO</ui:remove>
+			<ai:outputLabel 
+	       		for="txtParametrodescricao"
+	       		label="#{msgs['app.parametro.descricao']}"/>
+	       		
+	       	<ai:inputText 
+	       		id="txtParametrodescricao"
+	       		uppercase="true"
+	       		size="100"  
+	       		value="#{parametroAppBean.dto.descricao}"
+	       		maxlength="${func:getHibernateColmumnInfo('parametroAppBean.dto.descricao','length')}"
+	       		required="${not func:getHibernateColmumnInfo('parametroAppBean.dto.descricao','nullable')}" />
+	       		
+		 	<ui:remove>VALOR</ui:remove>
+	       	<ai:outputLabel 
+	       		for="txtParametroValor"
+	       		label="#{msgs['app.parametro.valor']}"/>
+	       	
+			<ai:inputTextarea 
+				id="txtParametroValor"
+				value="#{parametroAppBean.dto.valor}"
+	       		required="${not func:getHibernateColmumnInfo('parametroAppBean.dto.valor','nullable')}"
+				maxlength="${func:getHibernateColmumnInfo('parametroAppBean.dto.valor','length')}"
+				counter="counterParametroValor"/>
+	
+	</ai:panelGridApp>
+			
+</ui:composition>

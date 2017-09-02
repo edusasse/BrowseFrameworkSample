@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+ 
+    <composite:interface>
+ 
+ 		<ui:remove>ID DA DATATABLE</ui:remove>
+    	<composite:attribute name="id" />
+    	<ui:remove>LAZY MODEL</ui:remove>
+    	<composite:attribute name="value" />
+    	<ui:remove>NUMERO DE LINHAS A SEREM EXIBIDAS</ui:remove>
+    	<composite:attribute name="rows" />
+    	<ui:remove>CAMINHO DO ELEMENTO PARA EXPORTACAO PELO DATA EXPORTER</ui:remove>
+    	<composite:attribute name="target" />
+
+    </composite:interface>
+ 
+    <composite:implementation>
+		
+		<p:dataTable
+			immediate="true"
+			id="#{cc.attrs.id}" 
+			var="data"
+			value="#{cc.attrs.value}"
+			lazy="true" 
+			paginator="true"
+			rows="#{cc.attrs.rows}"
+			paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+			rowsPerPageTemplate="10,25,50,100"
+			filterEvent="enter"
+			update="@this"
+			emptyMessage="Nenhum registro para exibir!"
+			resizableColumns="true">
+			
+			<c:forEach 
+				var="campo"
+				items="#{relatorioBean.relatorioCorrente.campos}">
+				<p:column 
+					sortBy="#{campo.nomeCampo}"
+					filterBy="#{campo.nomeCampo}#{data[campo]}"
+					style="#{campo.tipoCampo == 'IMG' ? 'text-align: center;' : ''}"
+					headerText='${fn:replace(campo.nomeCampo, "_", " ")}'>
+					<f:facet name="header">
+						<h:outputText
+							value='${fn:replace(campo.nomeCampo, "_", " ")}' />
+					</f:facet>
+	
+					<ui:remove> DATA SEM MASCARA INFORMADA </ui:remove>
+					<c:if
+						test="#{campo.tipoCampo == 'DAT' and (campo.mascara == null or campo.mascara == '')}">
+						<h:outputText value="#{data[campo]}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</c:if>
+	
+					<ui:remove> DATA SEM MASCARA INFORMADA </ui:remove>
+					<c:if
+						test="#{campo.tipoCampo == 'DTH' and (campo.mascara == null or campo.mascara == '')}">
+						<h:outputText value="#{data[campo]}">
+							<f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+						</h:outputText>
+					</c:if>
+					
+					<ui:remove> DATA COM MASCARA INFORMADA </ui:remove>
+					<c:if
+						test="#{ (campo.tipoCampo == 'DAT' or campo.tipoCampo == 'DTH')  and (campo.mascara != null or campo.mascara != '')}">
+						<h:outputText value="#{data[campo]}">
+							<f:convertDateTime pattern="#{campo.mascara}" />
+						</h:outputText>
+					</c:if>
+	
+					<ui:remove> TEXTO COM CONVERTER </ui:remove>
+					<c:if
+						test="#{campo.tipoCampo == 'TEX' and (campo.mascara != null and campo.mascara != '')}">
+						<h:outputText value="#{data[campo]}">
+							<f:converter converterId="#{campo.mascara}" />
+						</h:outputText>
+					</c:if>
+	
+					<ui:remove> IMAGEM </ui:remove>
+					<c:if
+						test="#{campo.tipoCampo == 'IMG'}">
+						<p:commandButton icon="ui-icon-image" oncomplete="dlgImg.show();" update="@this">
+							<p:dialog
+								header="Imagem" 
+								widgetVar="dlgImg" 
+								modal="true"
+								maximizable="true" 
+								resizable="false" 
+								hideEffect="fade"
+								closeOnEscape="true"
+								width="800" 
+								height="600"
+								 style="vertical-align: center; float: center; text-align:center;"
+								dynamic="true"> 
+					 				<p:graphicImage value="#{relatorioBean.getStreamedContentFromImage(data[campo])}" style="vertical-align: center; float: center;"/>
+							</p:dialog> 
+						</p:commandButton>
+					</c:if>
+					
+					<ui:remove> NAO DATA E SEM CONVERTER INFORMADO </ui:remove>
+					<c:if
+						test="#{ not (campo.tipoCampo == 'DAT' or campo.tipoCampo == 'DTH' or campo.tipoCampo == 'IMG') and (campo.mascara == null or campo.mascara == '')}">
+						<h:outputText style="white-space:nowrap" value="#{data[campo]}" />
+					</c:if>
+					
+				</p:column>
+			</c:forEach>
+	
+		</p:dataTable>
+
+		<br/>
+				
+		<div align="center" style="top: 160px; z-index: 0">
+			<h:panelGrid columns="2">
+				<p:panel header="#{msgs['portalade.relatorios.exportarTudo']}">
+					<h:commandLink>
+						<p:graphicImage value="/resources/imagens/excel32x32.png"/>
+						<p:dataExporter type="xls" target="#{cc.attrs.target}"
+							postProcessor="#{relatorioBean.postProcessXLS}" 
+							fileName='${fn:replace(relatorioBean.relatorioCorrente.nome, " ", "_")}' />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage value="/resources/imagens/pdf32x32.png" />
+						<p:dataExporter type="pdf" target="#{cc.attrs.target}" 
+							preProcessor="#{relatorioBean.preProcessPDF}" 
+							fileName='${fn:replace(relatorioBean.relatorioCorrente.nome, " ", "_")}' />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage value="/resources/imagens/csv32x32.png" />  
+						<p:dataExporter type="csv" target="#{cc.attrs.target}" fileName='${fn:replace(relatorioBean.relatorioCorrente.nome, " ", "_")}' />
+					</h:commandLink>
+
+				</p:panel>
+
+				<p:panel header="#{msgs['portalade.relatorios.exportarPagina']}">
+					<h:commandLink>
+						<p:graphicImage value="/resources/imagens/excel32x32.png"/>
+						<p:dataExporter type="xls" target="#{cc.attrs.target}"
+							postProcessor="#{relatorioBean.postProcessXLS}"
+							 fileName='${fn:replace(relatorioBean.relatorioCorrente.nome, " ", "_")}'  pageOnly="true" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage value="/resources/imagens/pdf32x32.png" />  
+						<p:dataExporter type="pdf" target="#{cc.attrs.target}"
+							preProcessor="#{relatorioBean.preProcessPDF}"
+							 fileName='${fn:replace(relatorioBean.relatorioCorrente.nome, " ", "_")}' pageOnly="true" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage value="/resources/imagens/csv32x32.png" />  
+						<p:dataExporter type="csv" target="#{cc.attrs.target}"
+							fileName='${fn:replace(relatorioBean.relatorioCorrente.nome, " ", "_")}' pageOnly="true" />
+					</h:commandLink>
+
+				</p:panel>
+			</h:panelGrid>
+		</div>
+		 
+ 
+    </composite:implementation>
+ 
+</html>

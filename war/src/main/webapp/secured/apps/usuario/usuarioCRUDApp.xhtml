@@ -1,0 +1,112 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ai="http://java.sun.com/jsf/composite/composite/ai"
+	xmlns:sec="http://www.springframework.org/security/tags">
+ 
+		<ai:panelGridApp>
+		 
+		 	<ui:remove>PESSOA</ui:remove>
+		 	<ai:outputLabel 
+	       		for="txtUsuarioPessoa"
+	       		label="#{msgs['app.usuario.pessoaFisica']}"
+	       		required="${not func:getHibernateColmumnInfo('usuarioAppBean.dto.pessoaFisica','nullable')}"/>
+	       		
+	       	<ui:remove>PESSOA - Para exibir quando estiver alterando</ui:remove>
+	       	<c:if test="#{usuarioAppBean.dto.pessoaFisica != null}">
+		       	<ai:outputText
+		       		id="txtUsuarioPessoa"
+		       		value="#{usuarioAppBean.dto.pessoaFisica.nome}"/>
+	       	</c:if>
+	       	<ui:remove>PESSOA - Para entrada quando estiver cadastrando um novo usuario</ui:remove>
+	       	<c:if test="#{usuarioAppBean.dto.pessoaFisica == null}">
+		       	<ai:autoComplete 
+					id="txtUsuarioPessoa"
+					label="#{msgs['app.usuario.pessoaFisica']}"
+					bean="#{pessoaFisicaAppBean}"
+					size="100"
+					value="#{usuarioAppBean.dto.pessoaFisica}"
+					required="${not func:getHibernateColmumnInfo('usuarioAppBean.dto.pessoaFisica','nullable')}"
+					itemLabel="#{var.nome}"/>
+	       	</c:if>
+	       	
+		 	<ui:remove>APELIDO</ui:remove>
+		 	<ai:outputLabel 
+	       		for="txtUsuarioApelido"
+	       		label="#{msgs['app.usuario.apelido']}"
+	       		required="${not func:getHibernateColmumnInfo('usuarioAppBean.dto.apelido','nullable')}"/>
+	       		
+       		<ai:inputText 
+	       		id="txtUsuarioApelido"
+	       		label="#{msgs['app.usuario.apelido']}"
+	       		maxlength="${func:getHibernateColmumnInfo('usuarioAppBean.dto.apelido','length')}"
+	       		required="${not func:getHibernateColmumnInfo('usuarioAppBean.dto.apelido','nullable')}"
+	       		value="#{usuarioAppBean.dto.apelido}" />
+	       		
+	       	<ui:remove>SENHA</ui:remove>
+		 	<ai:outputLabel 
+	       		for="txtUsuarioSenha"
+	       		label="#{msgs['app.usuario.senha']}"
+	       		required="#{usuarioAppBean.dto.isNew()}"/>
+	       		  
+            <p:password 
+            	id="txtUsuarioSenha" 
+            	label="#{msgs['app.usuario.senha']}"
+            	value="#{usuarioAppBean.senhaAux}" 
+            	match="txtUsuarioConfirmacaoSenha"
+            	validatorMessage="#{msgs['app.usuario.senha.mensagemSenhasDivergentes']}"
+            	required="#{usuarioAppBean.dto.isNew()}"
+            	feedback="true"
+            	inline="true"
+            	redisplay="false"
+            	promptLabel="#{msgs['app.field.password.promptLabel']}"
+            	weakLabel="#{msgs['app.field.password.promptLabel']}"
+            	goodLabel="#{msgs['app.field.password.goodLabel']}"
+            	strongLabel="#{msgs['app.field.password.strongLabel']}"/>
+  
+            <ui:remove>CONFIRMACAO DE SENHA</ui:remove>
+		 	<ai:outputLabel 
+	       		for="txtUsuarioConfirmacaoSenha"
+	       		label="#{msgs['app.usuario.confirmacaoSenha']}"
+	       		required="#{usuarioAppBean.dto.isNew()}"/>
+	       		  
+            <p:password
+            	id="txtUsuarioConfirmacaoSenha"
+            	label="#{msgs['app.usuario.confirmacaoSenha']}"
+            	value="#{usuarioAppBean.senhaAux}"
+            	redisplay="false"
+            	required="#{usuarioAppBean.dto.isNew()}"/>  
+	       		
+	       	<ui:remove>ATIVO</ui:remove>
+	       	<c:if test="#{sec:areAllGranted('ROLE_ADMIN')}">
+		 	<ai:outputLabel 
+	       		for="txtUsuarioAtivo"
+	       		label="#{msgs['app.usuario.ativo']}"/>
+	       		
+       		<ai:selectBooleanCheckbox
+	       		id="txtUsuarioAtivo"
+	       		label="#{msgs['app.usuario.ativo']}"
+	       		value="#{usuarioAppBean.dto.ativo}" />
+	       	</c:if>
+	       	
+	       	<ui:remove>PERFIS</ui:remove>
+	       	<c:if test="#{sec:areAllGranted('ROLE_ADMIN')}">
+				<ai:outputLabel 
+			       		for="pickUsuarioPerfil"
+			       		label="#{msgs['app.usuario.perfis']}"/>
+			       		
+				<ai:pickList 
+					id="pickUsuarioPerfil" 
+					value="#{usuarioAppBean.dualListModelPerfil}"
+					itemLabel="#{var.nome}"
+					sourceCaption="#{msgs['app.pickList.sourceCaption']}"
+					targetCaption="#{msgs['app.pickList.targetCaption']}"/>
+			</c:if>
+	       
+	     </ai:panelGridApp>		 
+		
+</ui:composition>

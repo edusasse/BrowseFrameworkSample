@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:func="ai/functions">
+ 
+    <composite:interface>
+  
+ 		<ui:remove>ID</ui:remove>
+    	<composite:attribute name="id" required="true" type="java.lang.String" expert="true"/>
+    	<ui:remove>VALUE</ui:remove>
+    	<composite:attribute name="value" required="true"/>
+    	<ui:remove>REQUIRED</ui:remove>
+    	<composite:attribute name="required" default="fase"/>
+    	<ui:remove>maxlength</ui:remove>
+    	<composite:attribute name="maxlength" default="8000"/>
+    	<ui:remove>COLS</ui:remove>
+    	<composite:attribute name="cols" default="50"/>
+    	<ui:remove>AUTORESIZE</ui:remove>
+    	<composite:attribute name="autoResize" default="false"/>
+    	<ui:remove>COUNTER</ui:remove>
+    	<composite:attribute name="counter" default="counter"/>
+    	<ui:remove>DISABLED</ui:remove>
+    	<composite:attribute name="disabled" required="false"/>
+    	
+    </composite:interface>
+ 
+    <composite:implementation>
+	
+		<p:inputTextarea 
+			id="#{cc.attrs.id}"
+			required="#{cc.attrs.required}"
+			value="#{cc.attrs.value}" 
+			maxlength="#{cc.attrs.maxlength}"
+			cols="#{cc.attrs.cols}"
+			autoResize="#{cc.attrs.autoResize}" 
+			counter="#{cc.attrs.counter}" 
+			counterTemplate="{0} #{msgs['app.email.remainingCharacters']}"
+			disabled="#{cc.attrs.disabled}"/>
+		<p:tooltip id="#{cc.attrs.counter}" for="#{cc.attrs.id}"/>  
+	 
+    </composite:implementation>
+ 
+</html>

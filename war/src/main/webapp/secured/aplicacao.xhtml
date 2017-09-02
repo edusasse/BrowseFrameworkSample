@@ -1,0 +1,16 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/templates/main.xhtml">
+
+	<ui:define name="corpo">
+		<div class="principal_central">
+			<ui:include src="#{aplicacaoBean.getCaminho()}" />
+		</div>
+	</ui:define>
+
+</ui:composition>

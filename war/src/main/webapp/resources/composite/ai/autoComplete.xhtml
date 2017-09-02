@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:func="ai/functions">
+ 
+    <composite:interface>
+ 
+ 		<ui:remove>ID</ui:remove>
+    	<composite:attribute name="id" required="true"/>
+    	<ui:remove>VALUE</ui:remove>
+    	<composite:attribute name="value" required="true"/>
+    	<ui:remove>REQUIRED</ui:remove>
+    	<composite:attribute name="required" default="false"/>
+    	<ui:remove>SIZE</ui:remove>
+    	<composite:attribute name="size" default="50"/>
+    	<ui:remove>BEAN</ui:remove>
+    	<composite:attribute name="bean" required="true"/>
+  		<ui:remove>ITEM LABEL</ui:remove>
+    	<composite:attribute name="itemLabel" required="true"/>
+    	<ui:remove>LABEL</ui:remove>
+    	<composite:attribute name="label" required="false"/>
+    	<ui:remove>minQueryLength</ui:remove>
+    	<composite:attribute name="minQueryLength" required="false" default="3"/>
+    	<ui:remove>completeMethod</ui:remove>
+    	<composite:attribute name="completeMethod" required="false"/>
+    	<ui:remove>process</ui:remove>
+    	<composite:attribute name="process" required="false" default="@none"/>
+    	<ui:remove>onblur</ui:remove>
+    	<composite:attribute name="onblur" required="false"/>
+    	<ui:remove>onchange</ui:remove>
+    	<composite:attribute name="onchange" required="false"/>
+    	<ui:remove>TARGET</ui:remove>
+    	<composite:attribute name="targetPropertyName" type="java.lang.String" required="false" shortDescription="Quando informado habilita o cadastro de um novo item."/>
+    	<ui:remove>DISABLED</ui:remove>
+    	<composite:attribute name="disabled" required="false"/>
+    	
+    </composite:interface>
+ 
+    <composite:implementation>
+	
+		<c:if test="#{cc.attrs.completeMethod != null}">
+			<p:autoComplete 
+				id="#{cc.attrs.id}"
+				widgetVar="#{cc.attrs.widgetVar}"
+				value="#{cc.attrs.value}"
+				completeMethod="#{cc.attrs.completeMethod}"
+				itemLabel="#{cc.attrs.itemLabel}"
+				label="#{cc.attrs.label}"
+				required="#{cc.attrs.required}"
+				var="var"
+				size="#{cc.attrs.size}"
+				itemValue="${func:concat(var.id,idFacadeResolverBean.getFacadeByBaseDTOCLass(var.getClass()),'@')}"
+				converter="genericIdFacadeConverter"
+				minQueryLength="#{cc.attrs.minQueryLength}"
+				scrollHeight="250"
+				effect="fade"
+				dropdown="true"
+				forceSelection="true"
+				process="#{cc.attrs.process}"
+				onchange="#{cc.attrs.onchange}"
+				onblur="#{cc.attrs.onblur}"
+				disabled="#{cc.attrs.disabled}">
+			</p:autoComplete>
+			<c:if test="#{cc.attrs.targetPropertyName != null}">
+		 		<p:commandButton
+					immediate="true" 
+					process="@this"
+					icon="ui-icon-circle-plus"
+					title="Cadastrar novo."
+					onclick="doAbrirDialog#{cc.attrs.bean.getAppKey()}('#{cc.attrs.bean.getBeanName()}', '#{cc.attrs.targetPropertyName}');"/>
+			</c:if>
+		</c:if>
+		
+		<c:if test="#{cc.attrs.completeMethod == null}">
+			<p:autoComplete 
+				id="#{cc.attrs.id}"
+				widgetVar="#{cc.attrs.widgetVar}"
+				value="#{cc.attrs.value}"
+				completeMethod="#{cc.attrs.bean.doAutoComplete}"
+				itemLabel="#{cc.attrs.itemLabel}"
+				label="#{cc.attrs.label}"
+				required="#{cc.attrs.required}"
+				var="var"
+				size="#{cc.attrs.size}"
+				itemValue="${func:concat(var.id,idFacadeResolverBean.getFacadeByBaseDTOCLass(var.getClass()),'@')}"
+				converter="genericIdFacadeConverter"
+				minQueryLength="#{cc.attrs.minQueryLength}"
+				scrollHeight="250"
+				effect="fade"
+				dropdown="true"
+				forceSelection="true"
+				process="#{cc.attrs.process}"
+				onchange="#{cc.attrs.onchange}"
+				onblur="#{cc.attrs.onblur}"
+				disabled="#{cc.attrs.disabled}">
+			</p:autoComplete>
+			<c:if test="#{cc.attrs.targetPropertyName != null}">
+		 		<p:commandButton
+					immediate="true" 
+					process="@this"
+					icon="ui-icon-circle-plus"
+					title="Cadastrar novo."
+					onclick="doAbrirDialog#{cc.attrs.bean.getAppKey()}('#{cc.attrs.bean.getBeanName()}', '#{cc.attrs.targetPropertyName}');"
+					disabled="#{cc.attrs.disabled}"/>
+			</c:if>
+		</c:if>
+    </composite:implementation>
+ 
+</html>

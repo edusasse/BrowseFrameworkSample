@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ai="http://java.sun.com/jsf/composite/composite/ai"
+	xmlns:sec="http://www.springframework.org/security/tags">
+		
+		<ai:dataTableAppList>
+		
+			<p:column 
+				headerText="#{msgs['app.pessoa.nome']}" 
+				style="white-space: nowrap; width: 50%;"
+				sortBy="#{dto.nome}"
+				filterBy="#{dto.nome}">
+			        <h:outputText value="#{dto.nome}"/>
+	        </p:column>
+	        
+	        <p:column 
+				headerText="#{msgs['app.pessoaFisica.sexo']}" 
+				style="white-space: nowrap; width: 10%;text-align: center;"
+				sortBy="#{dto.sexo}"
+				filterBy="#{dto.sexo}">
+			        <h:outputText value="#{dto.sexo}"/>
+	        </p:column>
+	        
+	        <p:column 
+				headerText="#{msgs['app.pessoa.email']}" 
+				style="white-space: nowrap; width: 40%;"
+				sortBy="#{dto.email}"
+				filterBy="#{dto.email}">
+			        <h:outputText value="#{dto.email}"/>
+	        </p:column>
+	        
+		</ai:dataTableAppList>
+	 
+</ui:composition>

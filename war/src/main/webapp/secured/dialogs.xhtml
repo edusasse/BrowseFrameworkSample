@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ai="http://java.sun.com/jsf/composite/composite/ai"
+	xmlns:sec="http://www.springframework.org/security/tags">
+ 
+ 	<ui:remove>#########################################</ui:remove>
+	<ui:remove>TODOS OS DIALOG DEVEM SER INFORMADOS AQUI</ui:remove>
+	<ui:remove>#########################################</ui:remove>
+	<ui:include src="#{cidadeAppBean.getCaminho('DIALOG')}" />
+	<ui:include src="#{classificacaoAppBean.getCaminho('DIALOG')}" />
+	<ui:include src="#{clienteAppBean.getCaminho('DIALOG')}" />
+	<ui:include src="#{enderecoAppBean.getCaminho('DIALOG')}" />
+	<ui:include src="#{perfilAppBean.getCaminho('DIALOG')}" />
+	<ui:include src="#{pessoaFisicaAppBean.getCaminho('DIALOG')}" />
+	<ui:include src="#{pessoaJuridicaAppBean.getCaminho('DIALOG')}" />
+	<ui:include src="#{telefoneAppBean.getCaminho('DIALOG')}" />
+	<ui:include src="#{tipoEnderecoAppBean.getCaminho('DIALOG')}" />
+	<ui:include src="#{tipoTelefoneAppBean.getCaminho('DIALOG')}" />
+	<ui:include src="#{unidadeFederacaoAppBean.getCaminho('DIALOG')}" />
+	<ui:include src="#{usuarioAppBean.getCaminho('DIALOG')}" />
+
+	<ui:remove>#######################################################</ui:remove>
+	<ui:remove>FUNCAO CHAMADA PELO FECHAR DIALOG PARA ATUALIZAR A TELA</ui:remove>
+	<ui:remove>#######################################################</ui:remove>
+	<h:form>
+		<p:remoteCommand
+			id="rcAtualizaTela" 
+			name="doAtualizarTela" 
+		 	update=":all"/>
+	 </h:form>
+	 
+	 <h:form>
+		 <pe:remoteCommand
+				id="rcFrmHasAppDialogAberta"
+				name="hasAppDialogAberta"
+				process="@this"
+				global="true" 
+				oncomplete="handleCompleteHasAppDialogAberta(xhr, status, args)"
+				actionListener="#{aplicacaoDialogBean.hasAppDialogAberta}">
+		</pe:remoteCommand>
+	</h:form>
+	
+</ui:composition>

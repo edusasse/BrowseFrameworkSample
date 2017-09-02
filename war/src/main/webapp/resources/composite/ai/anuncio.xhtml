@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:func="ai/functions">
+ 
+    <composite:interface>
+    	<ui:remove>ID</ui:remove>
+    	<composite:attribute name="id" required="true"/>
+    	<ui:remove>VALUE</ui:remove>
+    	<composite:attribute name="value" required="true"/>
+    	<ui:remove>onchange</ui:remove>
+    	<composite:attribute name="onchange"/>
+    	<ui:remove>X</ui:remove>
+    	<composite:attribute name="lengthH" required="true" type="java.lang.Integer"/>
+    	<ui:remove>Y</ui:remove>
+    	<composite:attribute name="lengthV" required="true" type="java.lang.Integer"/>
+    	<ui:remove>DISABLED</ui:remove>
+    	<composite:attribute name="disabled" required="false"/>
+    </composite:interface>
+ 
+    <composite:implementation>
+		
+		<p:panelGrid id="#{cc.attrs.id}" columns="#{cc.attrs.lengthH}" styleClass="ui-anuncio">  
+			<c:forEach var="x" begin="0" end="#{cc.attrs.lengthV-1}">  
+				<c:forEach var="y" begin="0" end="#{cc.attrs.lengthH-1}">
+					<p:selectBooleanCheckbox
+						id="#{cc.attrs.id}_#{x}_#{y}"
+						value="#{cc.attrs.value[x][y]}"
+						styleClass="ui-anuncio-chkbox anuncio"
+						disabled="#{cc.attrs.disabled}"
+						onchange="#{cc.attrs.onchange}"/>
+				</c:forEach>
+			</c:forEach>
+		</p:panelGrid>  
+		 
+    </composite:implementation>
+ 
+</html>

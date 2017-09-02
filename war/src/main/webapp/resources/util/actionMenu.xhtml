@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:include src="/secured/dialogs.xhtml" />
+	<ui:include src="/secured/report/jasperReportDialog.xhtml" />
+	<ui:include src="/secured/report/jasperReportParametersDialog.xhtml" />
+
+	<ui:remove>FORMULARIO DE TRABALHO DA APLICACAO EM EXECUCAO</ui:remove>
+	<h:form 
+		id="#{aplicacaoBean.aplicacaoCorrente.getFormId()}" 
+		binding="#{aplicacaoBean.aplicacaoCorrente.form}" 
+		prependId="false"
+		acceptcharset="ISO-8859-1"
+		enctype="multipart/form-data">
+		
+		<h:panelGroup id="wrapper" layout="block">
+			
+			<h:panelGroup 
+				id="main-nav-holder" 
+				layout="block">
+				<ui:remove>ACTION MENU</ui:remove>
+				<p:menubar id="menubar" styleClass="actionMenu" rendered="#{aplicacaoBean.menuActionModel != null}" model="#{aplicacaoBean.menuActionModel}"/>			
+            
+				<ui:remove>DIALOG PARA CONFIRMAR NOVO</ui:remove>
+				<ui:include src="../util/dialogConfirmarNovo.xhtml" />
+				
+				<ui:remove>DIALOG PARA CONFIRMAR EXCLUSAO</ui:remove>
+				<ui:include src="../util/dialogConfirmarExcluir.xhtml" />
+				
+			</h:panelGroup>
+			
+			<ui:remove>CONTEUDO</ui:remove>
+			<h:panelGroup id="container" layout="block">
+				<ui:remove>MESSAGE</ui:remove>
+				<p:messages styleClass="msg" id="messages" showDetail="false" autoUpdate="true" closable="true" />
+				<ui:remove>MESSAGE COM GROWL</ui:remove>
+				<ui:remove>
+					<p:growl id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+				</ui:remove>
+				
+				<p:panel styleClass="appTitle"> 
+			        <h:outputText styleClass="appTitleText" value="#{aplicacaoBean.aplicacaoCorrente.getNomeAplicacao()}" />  
+			    </p:panel>
+			    
+				<ui:remove>CORPO DA APLICACAO</ui:remove>
+				<ui:insert name="corpo" />
+				
+				<ui:remove>VOLTAR AO TOPO -- BUG 
+					<p:commandButton 
+						id="topLink" 
+						type="button" 
+						icon="ui-icon-circle-arrow-n" 
+						styleClass="top hidden"
+						title="#{msgs['app.voltarAoTopo']}"
+						onclick="$('html, body').animate({scrollTop: 0}, 'fast');">
+					</p:commandButton>
+				</ui:remove>
+				
+			</h:panelGroup>
+			
+		</h:panelGroup>
+
+		<ui:remove>WAYPOINT UP -- BUG 
+			<pe:waypoint 
+				id="waypoint1" 
+				for="wrapper" 
+				offset="'-10%'">
+				<pe:javascript 
+					event="reached"
+					execute="$('#topLink').toggleClass('hidden', ext.direction === 'up');" />
+			</pe:waypoint>
+		</ui:remove>
+	 
+	</h:form>
+</ui:composition>

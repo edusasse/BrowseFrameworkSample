@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ai="http://java.sun.com/jsf/composite/composite/ai"
+	xmlns:sec="http://www.springframework.org/security/tags">
+		
+		<ai:dataTableAppList>
+		
+			<p:column 
+				headerText="#{msgs['app.endereco.pessoa']}" 
+				style="white-space: nowrap;"
+				sortBy="#{dto.pessoa.nome}"
+				filterBy="#{dto.pessoa.nome}">
+			        <h:outputText value="#{dto.pessoa.nome}"/>
+	        </p:column>
+	        
+	        <p:column 
+				headerText="#{msgs['app.endereco.tipoEndereco']}" 
+				style="white-space: nowrap;"
+				sortBy="#{dto.tipoEndereco.descricao}"
+				filterBy="#{dto.tipoEndereco.descricao}">
+			        <h:outputText value="#{dto.tipoEndereco.descricao}"/>
+	        </p:column>
+	        
+	        <p:column 
+				headerText="#{msgs['app.endereco.logradouro']}" 
+				style="white-space: nowrap;"
+				sortBy="#{dto.logradouro}"
+				filterBy="#{dto.logradouro}">
+			        <h:outputText value="#{dto.logradouro}"/>
+	        </p:column>
+	        
+	        <p:column 
+				headerText="#{msgs['app.endereco.numero']}" 
+				style="white-space: nowrap;"
+				sortBy="#{dto.numero}"
+				filterBy="#{dto.numero}">
+			        <h:outputText value="#{dto.numero}"/>
+	        </p:column>
+	        
+	        <p:column 
+				headerText="#{msgs['app.endereco.bairro']}" 
+				style="white-space: nowrap;"
+				sortBy="#{dto.bairro}"
+				filterBy="#{dto.bairro}">
+			        <h:outputText value="#{dto.bairro}"/>
+	        </p:column>
+	        
+		</ai:dataTableAppList>
+	 
+</ui:composition>

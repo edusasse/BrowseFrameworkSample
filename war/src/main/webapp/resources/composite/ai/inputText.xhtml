@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:func="ai/functions">
+ 
+    <composite:interface>
+ 
+ 		<ui:remove>ID</ui:remove>
+    	<composite:attribute name="id" required="true"/>
+    	<ui:remove>VALUE</ui:remove>
+    	<composite:attribute name="value" required="true"/>
+    	<ui:remove>LABEL</ui:remove>
+    	<composite:attribute name="label" required="false"/>
+    	<ui:remove>REQUIRED</ui:remove>
+    	<composite:attribute name="required" default="false"/>
+    	<ui:remove>VALIDATOR</ui:remove>
+    	<composite:attribute name="validatorId"/>
+    	<ui:remove>SIZE</ui:remove>
+    	<composite:attribute name="size" default="50"/>
+    	<ui:remove>MASK</ui:remove>
+    	<composite:attribute name="mask" required="false"/>
+    	<ui:remove>MAXLEGTH</ui:remove>
+    	<composite:attribute name="maxlength" default="255"/>
+    	<ui:remove>ONLY NUMBERS</ui:remove>
+    	<composite:attribute name="commitEdit" default="false" type="java.lang.Boolean"/>
+    	<ui:remove>UPPERCASE</ui:remove>
+    	<composite:attribute name="uppercase" default="false" type="java.lang.Boolean"/>
+    	<ui:remove>LOWERCASE</ui:remove>
+    	<composite:attribute name="lowercase" default="false" type="java.lang.Boolean"/>
+    	
+    </composite:interface>
+ 
+    <composite:implementation>
+	
+		<c:if test="#{cc.attrs.mask == null and not (cc.attrs.uppercase or cc.attrs.lowercase)}">
+	       	<p:inputText 
+	       		id="#{cc.attrs.id}"
+	       		label="#{cc.attrs.label}"
+	       		required="#{cc.attrs.required}"
+	       		size="#{cc.attrs.size}"  
+	       		maxlength="#{cc.attrs.maxlength}"
+	       		value="#{cc.attrs.value}">
+	       			<c:if test="#{cc.attrs.validatorId != null}">
+	       				<f:validator validatorId="#{cc.attrs.validatorId}"/>
+	       			</c:if>
+	       			<composite:insertChildren />
+	       	</p:inputText>
+       	</c:if>
+       	
+       	<c:if test="#{cc.attrs.mask == null and cc.attrs.uppercase == 'true'}">
+	       	<p:inputText 
+	       		id="#{cc.attrs.id}" 
+	       		label="#{cc.attrs.label}"
+	       		onkeydown="this.value = this.value.toUpperCase();" 
+	       		onkeyup="this.value = this.value.toUpperCase();" 
+	       		onblur="this.value = this.value.toUpperCase();"
+	       		required="#{cc.attrs.required}"
+	       		size="#{cc.attrs.size}"  
+	       		maxlength="#{cc.attrs.maxlength}"
+	       		value="#{cc.attrs.value}">
+	       			<c:if test="#{cc.attrs.validatorId != null}">
+	       				<f:validator validatorId="#{cc.attrs.validatorId}"/>
+	       			</c:if>
+	       			<composite:insertChildren />
+	       	</p:inputText>
+       	</c:if>
+       	
+		<c:if test="#{cc.attrs.mask == null and cc.attrs.lowercase == 'true'}">
+	       	<p:inputText 
+	       		id="#{cc.attrs.id}"  
+	       		label="#{cc.attrs.label}"
+	       		onkeydown="this.value = this.value.toLowerCase();" 
+	       		onkeyup="this.value = this.value.toLowerCase();"
+	       		onblur="this.value = this.value.toLowerCase();"
+	       		required="#{cc.attrs.required}"
+	       		size="#{cc.attrs.size}"  
+	       		maxlength="#{cc.attrs.maxlength}"
+	       		value="#{cc.attrs.value}">
+	       			<c:if test="#{cc.attrs.validatorId != null}">
+	       				<f:validator validatorId="#{cc.attrs.validatorId}"/>
+	       			</c:if>
+	       			<composite:insertChildren />
+	       	</p:inputText>
+       	</c:if>
+       	
+       	<c:if test="#{cc.attrs.mask != null and cc.attrs.commitEdit == false}">
+       		<p:inputMask
+	       		id="#{cc.attrs.id}"
+	       		label="#{cc.attrs.label}"
+	       		required="#{cc.attrs.required}"
+	       		size="#{cc.attrs.size}"  
+	       		value="#{cc.attrs.value}"
+	       		mask="#{cc.attrs.mask}">
+	       			<c:if test="#{cc.attrs.validatorId != null}">
+	       				<f:validator validatorId="#{cc.attrs.validatorId}"/>
+	       			</c:if>
+	       			<composite:insertChildren />
+	       	</p:inputMask> 
+    	</c:if>
+    	
+    	<c:if test="#{cc.attrs.mask != null and cc.attrs.commitEdit == true}">
+       		<p:inputMask
+	       		id="#{cc.attrs.id}"
+	       		label="#{cc.attrs.label}"
+	       		required="#{cc.attrs.required}"
+	       		size="#{cc.attrs.size}"  
+	       		value="#{cc.attrs.value}"
+	       		mask="#{cc.attrs.mask}"
+	       		converter="numericConverter">
+	       			<c:if test="#{cc.attrs.validatorId != null}">
+	       				<f:validator validatorId="#{cc.attrs.validatorId}"/>
+	       			</c:if>
+	       			<composite:insertChildren />
+	       	</p:inputMask>
+    	</c:if>
+    	
+    </composite:implementation>
+ 
+</html>

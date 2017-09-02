@@ -1,0 +1,114 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	
+	<p:graphicImage 
+		style="z-index: 999999;"
+		id="iconUser"
+		styleClass="userInfo userIconButton"
+		name="user24x24.png" 
+		library="imagens" />
+		
+	<p:overlayPanel 
+		id="panelUser" 
+		for="iconUser" 
+		style="z-index: 999999;"
+		hideEffect="fade">
+
+		<p:panelGrid style="z-index: 999999;">
+			<f:facet name="header">
+				<p:row>
+ 					<p:column colspan="2">#{msgs['app.userInfo.user']}</p:column>
+ 				</p:row>
+ 			</f:facet>
+
+			<ui:remove>NOME DO USUARIO OBTIDO DA PESSOA</ui:remove>
+ 			<p:row>
+ 				<p:column>  
+					<h:outputLabel for="txtUserInfoNome" styleClass="font-negrito" value="#{msgs['app.userInfo.name']}" />
+				</p:column>
+				<p:column>
+					<h:outputText id="txtUserInfoNome" value="#{loginBean.loggedUserDetails.pessoaFisica.nome}"/>
+				</p:column>
+			</p:row>
+			
+			<ui:remove>APELIDO DO USUARIO</ui:remove>
+			<p:row>
+ 				<p:column>
+					<h:outputLabel for="txtUserInfoApelido" styleClass="font-negrito" value="#{msgs['app.userInfo.nickname']}" />
+				</p:column>
+				<p:column>
+					<h:outputText id="txtUserInfoApelido" value="#{loginBean.loggedUserDetails.username}"/>
+				</p:column>
+			</p:row>
+			
+			<ui:remove>DATA DO ACESSO ANTERIOR AO CORRENTE DO USUARIO</ui:remove>
+			<p:row>
+ 				<p:column>
+					<h:outputLabel for="txtUserInfoDataAcessoAnterior" styleClass="font-negrito" value="#{msgs['app.userInfo.previousAccess']}" />
+				</p:column>
+				<p:column>
+					<h:outputText id="txtUserInfoDataAcessoAnterior" value="#{loginBean.loggedUserDetails.dataAcessoAnterior}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"/>
+					</h:outputText>
+				</p:column>
+			</p:row>
+			
+			<ui:remove>DATA DESTE ACESSO DO USUARIO</ui:remove>
+			<p:row>
+ 				<p:column>
+					<h:outputLabel for="txtUserInfoDataUltimoAcesso" styleClass="font-negrito" value="#{msgs['app.userInfo.lastAccess']}" />
+				</p:column>
+				<p:column>
+					<h:outputText id="txtUserInfoDataUltimoAcesso" value="#{loginBean.loggedUserDetails.dataUltimoAcesso}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"/>
+					</h:outputText>
+				</p:column>
+			</p:row>
+			
+			<p:row>
+				<p:column colspan="2">
+					<h:outputText id="txtUserInfoProgramas" value="Programas abertos:" styleClass="font-negrito"/>
+				</p:column>
+			</p:row>
+			
+			<p:row>
+				<p:column colspan="2">
+					<p:dataList value="#{aplicacaoBean.pilhaAplicacaoCorrente.toArray()}" var="app" itemType="disc">  
+						#{app.getAplicacao().nomeAplicacao}-#{app.getAplicacaoType()}
+					</p:dataList>
+				</p:column>
+			</p:row>
+
+			<f:facet name="footer">
+				<p:row>
+					<p:column colspan="2">
+						<div class="centerDivContent">
+							<h:form>
+								<p:commandButton
+									update=":all"
+									value="#{msgs['app.userInfo.changePassword']}" 
+									actionListener="#{aplicacaoBean.doCarregarDTO(usuarioAppBean,loginBean.loggedUserDetails, null)}" 
+									icon="ui-icon-suitcase"/>
+								
+								
+								<p:commandButton
+									id="buttonLogOut"
+									value="#{msgs['app.userInfo.logOut']}" 
+									action="#{loginBean.doLogOut()}"
+									ajax="false" 
+									icon="ui-icon-closethick" />
+							</h:form>
+						</div>
+					</p:column>
+				</p:row>
+			</f:facet>
+		</p:panelGrid>
+
+	</p:overlayPanel>
+</ui:composition>

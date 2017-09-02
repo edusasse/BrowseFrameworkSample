@@ -1,0 +1,102 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ai="http://java.sun.com/jsf/composite/composite/ai"
+	xmlns:sec="http://www.springframework.org/security/tags">
+ 
+		<ai:panelGridApp>
+		 
+		 	<ui:remove>Nome</ui:remove>
+		 	<ai:outputLabel 
+	       		for="txtPessoaNome"
+	       		label="#{msgs['app.pessoa.nome']}"/>
+	       		
+       		<ai:inputText 
+	       		id="txtPessoaNome"
+	       		label="#{msgs['app.pessoa.nome']}"
+	       		size="100"  
+	       		value="#{pessoaFisicaAppBean.dto.nome}"
+	       		maxlength="${func:getHibernateColmumnInfo('pessoaFisicaAppBean.dto.nome','length')}"
+	       		required="${not func:getHibernateColmumnInfo('pessoaFisicaAppBean.dto.nome','nullable')}" />
+	       		
+	       	<ui:remove>Sexo</ui:remove>
+	       	<ai:outputLabel 
+	       		for="txtPessoaNome"
+	       		label="#{msgs['app.pessoaFisica.sexo']}"/>
+	       		
+			<p:selectOneMenu
+				id="cmbPessoaSexo"
+				label="#{msgs['app.pessoaFisica.sexo']}"
+				effect="fade"
+				required="${not func:getHibernateColmumnInfo('pessoaFisicaAppBean.dto.sexo','nullable')}"
+				value="#{pessoaFisicaAppBean.dto.sexo}">
+				<f:selectItem itemLabel="#{msgs['app.selectOne']}" itemValue="" />
+				<f:selectItems value="${func:convertEnumToList('br.com.browseframeworksample.domain.enums.Sexo')}"/>
+			</p:selectOneMenu>
+			
+			<ui:remove>Email</ui:remove>
+	       	<ai:outputLabel 
+	       		for="txtPessoaEmail"
+	       		label="#{msgs['app.pessoa.email']}"/>
+	       		
+			<ai:inputTextEmail
+				id="txtPessoaEmail"
+				label="#{msgs['app.pessoa.email']}" 
+				value="#{pessoaFisicaAppBean.dto.email}" 
+				maxlength="${func:getHibernateColmumnInfo('pessoaFisicaAppBean.dto.email','length')}"
+	       		required="${not func:getHibernateColmumnInfo('pessoaFisicaAppBean.dto.email','nullable')}" />
+				
+			<ui:remove>Email Faturamento</ui:remove>
+	       	<ai:outputLabel 
+	       		for="txtPessoaEmailFaturamento"
+	       		label="#{msgs['app.pessoa.emailFaturamento']}"/>
+	       		
+			<ai:inputTextEmail
+				id="txtPessoaEmailFaturamento"
+				label="#{msgs['app.pessoa.emailFaturamento']}"
+				value="#{pessoaFisicaAppBean.dto.emailFaturamento}" 
+				maxlength="${func:getHibernateColmumnInfo('pessoaFisicaAppBean.dto.emailFaturamento','length')}"
+	       		required="${not func:getHibernateColmumnInfo('pessoaFisicaAppBean.dto.emailFaturamento','nullable')}" />
+			
+			<ui:remove>Data de Nascimento</ui:remove>
+	       	<ai:outputLabel 
+	       		for="txtPessoaDataNascimento"
+	       		label="#{msgs['app.pessoaFisica.dataNascimento']}"/>
+	       		
+			<ai:calendar 
+				id="txtPessoaDataNascimento"
+				label="#{msgs['app.pessoaFisica.dataNascimento']}"
+				value="#{pessoaFisicaAppBean.dto.dataNascimento}"
+				required="${not func:getHibernateColmumnInfo('pessoaFisicaAppBean.dto.dataNascimento','nullable')}" />
+			
+			<ui:remove>Observacao</ui:remove>
+	       	<ai:outputLabel 
+	       		for="txtPessoaObservacao"
+	       		label="#{msgs['app.pessoa.observacao']}"/>
+
+			<ai:inputTextarea 
+				id="txtPessoaObservacao"
+				label="#{msgs['app.pessoa.observacao']}"
+				value="#{pessoaFisicaAppBean.dto.observacao}"
+				maxlength="4000"
+				counter="counterPessoaObservacao"
+				required="${not func:getHibernateColmumnInfo('pessoaFisicaAppBean.dto.observacao','nullable')}"/>
+				
+			<ui:remove>ATIVO</ui:remove>
+		 	<ai:outputLabel 
+	       		for="txtPessoaFisicaMembroEquipe"
+	       		label="#{msgs['app.pessoaFisica.membroEquipe']}"/>
+	       		
+       		<ai:selectBooleanCheckbox
+	       		id="txtPessoaFisicaMembroEquipe"
+	       		label="#{msgs['app.pessoaFisica.membroEquipe']}"
+	       		value="#{pessoaFisicaAppBean.dto.membroEquipe}" />
+	       		
+
+	</ai:panelGridApp> 
+    
+</ui:composition>

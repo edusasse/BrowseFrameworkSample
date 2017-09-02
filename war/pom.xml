@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<groupId>br.com.browseframeworksample</groupId>
+		<artifactId>browseframeworksample</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	
+	<artifactId>browseframeworksample-war</artifactId>
+	<packaging>war</packaging>
+
+	<name>Sample - War</name>
+	
+	<properties>
+		<project.resources.home.folder>${project.basedir}/src/main/webapp/resources/</project.resources.home.folder>
+		<project.resources.build.folder>${project.build.directory}/temp-resources/</project.resources.build.folder>
+	</properties>
+	
+	<build>
+		<plugins>
+			
+			<!-- Cleaning -->
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>${maven-clean-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>auto-clean</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+						<configuration>
+							<filesets>
+								<fileset>
+									<directory>${project.resources.home.folder}</directory>
+									<includes>
+										<include>**/*.min.css</include>
+										<include>**/*.min.js</include>
+									</includes>
+								</fileset>
+							</filesets>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!-- Compiles JRXML files into JASPER files -->
+			<!--plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jasperreports-maven-plugin</artifactId>
+				<configuration>
+					<outputDirectory>target/${project.artifactId}/WEB-INF/classes/report</outputDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<inherited>false</inherited>
+						<goals>
+							<goal>compile-reports</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>net.sf.jasperreports</groupId>
+						<artifactId>jasperreports</artifactId>
+						<version>${jasperreports.version}</version> 
+					</dependency>
+					<dependency>
+						<groupId>log4j</groupId>
+						<artifactId>log4j</artifactId>
+						<version>1.2.16</version>
+						<type>jar</type>
+					</dependency>
+					</dependencies>
+			</plugin-->
+
+			<!-- Maven plugin for web resource optimization [inicio] -->
+			<!-- Cria os diretórios temporários -->
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate-sources</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<tasks>
+								<mkdir dir="${project.build.directory}/temp-resources" />
+								<mkdir dir="${project.build.directory}/temp-resources/css" />
+								<mkdir dir="${project.build.directory}/temp-resources/js" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Copy Resources -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>${maven-resources-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.resources.build.folder}/</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.resources.home.folder}</directory>
+									<filtering>true</filtering>
+									<includes>
+										<include>**/*.css</include>
+										<include>**/*.js</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		
+			<!-- Compress and Combine -->
+			<plugin>
+				<groupId>org.primefaces.extensions</groupId>
+				<artifactId>resources-optimizer-maven-plugin</artifactId>
+				<version>${resources-optimizer-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>optimize</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>optimize</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<warningLevel>QUIET</warningLevel>
+					<suffix>-min</suffix>
+					<failOnWarning>false</failOnWarning>
+					<resourcesSets>
+						<resourcesSet>
+							<inputDir>${project.resources.build.folder}/cssDsv/</inputDir>
+							<includes>
+								<include>**/*.css</include>
+							</includes>
+							<aggregations>
+								<aggregation>
+									<removeIncluded>false</removeIncluded>
+									<outputFile>
+										${project.resources.home.folder}/css/${project.artifactId}.min.css
+									</outputFile>
+								</aggregation>
+							</aggregations>
+						</resourcesSet>
+						<resourcesSet>
+							<inputDir>${project.resources.build.folder}/jsDsv/</inputDir>
+							<includes>
+								<include>**/*.js</include>
+							</includes>
+							<aggregations>
+								<aggregation>
+									<removeIncluded>false</removeIncluded>
+									<outputFile>
+										${project.resources.home.folder}/js/${project.artifactId}.min.js
+									</outputFile>
+								</aggregation>
+							</aggregations>
+						</resourcesSet>
+					</resourcesSets>
+			
+				</configuration>
+			</plugin>
+			<!-- Maven plugin for web resource optimization [fim] -->
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${maven-war-plugin.version}</version>
+				<configuration>
+					<packagingExcludes>WEB-INF/lib/*.jar</packagingExcludes>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<version>${aspectj-plugin.version}</version>
+				<configuration>
+					<encoding>utf-8</encoding>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<complianceLevel>${java.version}</complianceLevel>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>test-compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>${maven-eclipse-plugin.version}</version>
+				<configuration>
+					<ajdtVersion>${ajdtVersion.version}</ajdtVersion>
+					<wtpversion>${wtpversion.version}</wtpversion>
+					<additionalProjectFacets>
+						<jst.web>${jst.web.version}</jst.web>
+						<jst.jsf>${jst.jsf.version}</jst.jsf>
+					</additionalProjectFacets>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											aspectj-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.1,)
+										</versionRange>
+										<goals>
+											<goal>test-compile</goal>
+											<goal>compile</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<dependencies>
+		
+		<!-- Sample -->
+		<!-- BUSINESS -->
+		<dependency>
+			<groupId>br.com.browseframeworksample</groupId>
+			<artifactId>browseframeworksample-business</artifactId>
+			<version>${browseframeworksample.business.version}</version>
+		</dependency>
+		
+		<!-- BROWSE-FRAMEWORK -->
+		<!-- JSF-PRIMEFACES -->
+		<dependency>
+			<groupId>br.com.browseframework</groupId>
+			<artifactId>browsefrw-jsf-primefaces</artifactId>
+			<version>${browsefrw.version}</version>
+		</dependency>		
+		<!-- UTIL -->
+		<dependency>
+			<groupId>br.com.browseframework</groupId>
+			<artifactId>browsefrw-util</artifactId>
+			<version>${browsefrw.version}</version>
+		</dependency>
+		<!-- REPORT -->
+		<dependency>
+			<groupId>br.com.browseframework</groupId>
+			<artifactId>browsefrw-report</artifactId>
+			<version>${browsefrw.version}</version>
+		</dependency>
+		
+		<!-- SPRING -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-aop</artifactId>
+		    <version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.webflow</groupId>
+			<artifactId>spring-faces</artifactId>
+			<version>2.3.1.RELEASE</version>
+		</dependency>
+		
+		<!-- Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>${hibernate-core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-infinispan</artifactId>
+			<version>${hibernate-core.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.hibernate</groupId>
+		  <artifactId>hibernate-envers</artifactId>
+		  <version>${hibernate-core.version}</version>
+		</dependency>
+		
+		<!-- EhCache -->
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache-core</artifactId>
+			<version>${ehcache-core.vesion}</version>
+		</dependency>
+
+		<!-- Servlet API -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>${servlet-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- JSF -->
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>${jsf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>${jsf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${servlet.version}</version>
+		</dependency>
+		<!-- OmniFaces -->
+		<dependency>
+		    <groupId>org.omnifaces</groupId>
+		    <artifactId>omnifaces</artifactId>
+		    <version>${omnifaces.version}</version>
+		</dependency>
+		
+		<!-- EL -->
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>el-api</artifactId>
+			<version>${el-api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>el-impl</artifactId>
+			<version>${el-impl.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>${jsp-api.version}</version>
+		</dependency>
+		
+		<!-- PRIMEFACES -->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>${primefaces.version}</version>
+		</dependency>
+		<!-- Tema -->
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>cupertino</artifactId>
+			<version>${primefaces.theme.version}</version>
+		</dependency>
+		
+		<!-- PRIMEFACES EXTENSIONS -->
+		<dependency>
+	        <groupId>org.primefaces.extensions</groupId>
+	        <artifactId>primefaces-extensions</artifactId>
+	        <version>${primefaces-extensions.version}</version>
+	        <exclusions>
+				<exclusion>
+					<artifactId>primefaces</artifactId>
+					<groupId>org.primefaces</groupId>
+				</exclusion>
+			</exclusions>
+    	</dependency>
+    	
+    	<!-- UPLOAD -->
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>${commons-beanutils.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>${commons-fileupload.version}</version>
+		</dependency>
+		
+		<!-- UTILIZADO NO DATAEXPORTER DO PRIMEFACES -->
+    	<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>${itext.version}</version>
+		</dependency>
+		
+		<!-- MYSQL -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+		</dependency>
+	
+		<!-- Groovy (for Jasperreports) -->
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>${groovy.version}</version>
+		</dependency>
+	
+		<!-- PRETTYFACES - for JSF 2.x -->
+		<dependency>
+			<groupId>com.ocpsoft</groupId>
+			<artifactId>prettyfaces-jsf2</artifactId>
+			<version>${prettyfaces.version}</version>
+		</dependency>
+		
+		<!-- JODA-TIME -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>${jodatime.version}</version>
+		</dependency>
+
+		<!-- JSR250 -->
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>jsr250-api</artifactId>
+			<version>${jsr250.version}</version>
+		</dependency>
+		
+		<!-- JAVA MAIL -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>${javax.mail.version}</version>
+		</dependency>
+		
+		<!-- Jasper Reports -->
+		<dependency>
+		    <groupId>net.sf.jasperreports</groupId>
+		    <artifactId>jasperreports</artifactId>
+		    <version>${jasperreports.version}</version>
+		</dependency>
+		
+		<!-- Jasper Reports - Font - VERDANA -->
+		<dependency>
+		    <groupId>jasperreports-font</groupId>
+		    <artifactId>verdana</artifactId>
+		    <version>1.0.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-fonts</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+
+	</dependencies>
+</project>

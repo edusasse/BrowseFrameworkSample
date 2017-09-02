@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+		<h:form id="form">
+				<p:dataTable 
+					value="#{relatorioJasperReportsBean.currentListParameters}"
+					var="par"
+					width="350">
+					
+					<f:facet colspan="4" name="header">
+						<h:outputText value="#{relatorioJasperReportsBean.currentReport.reportTitle}" />
+					</f:facet>
+
+					<p:column>
+						<f:facet name="header">#{msgs['reportJasper.parameter.name']}</f:facet>
+						<h:outputText value="#{par.name}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">#{msgs['reportJasper.parameter.type']}</f:facet>
+						<h:outputText value="#{par.translatedClassName}" />
+					</p:column>
+					
+				 
+					<p:column>
+						<f:facet name="header">#{msgs['reportJasper.parameter.description']}</f:facet>
+						<h:outputText value="#{par.description}" />
+					</p:column>
+ 					
+ 					
+					<p:column>
+						<f:facet name="header">#{msgs['reportJasper.parameter.value']}</f:facet>
+						
+						<ui:remove> TEXT </ui:remove>
+						<p:inputText value="#{par.value}"
+							rendered="${'Text'   == par.translatedClassName}"
+							required="${false}" />
+							
+						<ui:remove> DATE </ui:remove>
+						<p:calendar value="#{par.value}"
+							effect="slide"
+							pattern="dd/MM/yyyy"
+							rendered="${'Date'    == par.translatedClassName}"/>
+							
+			            <ui:remove> DECIMAL </ui:remove>
+			            <pe:inputNumber value="#{par.value}"
+			            	rendered="${'Decimal' == par.translatedClassName}"
+			            	required="${false}" 
+			            	mask="#,##" 
+			            	onfocus="this.select();"/>
+			            	
+						<ui:remove> INTEGER </ui:remove>
+						<pe:inputNumber value="#{par.value}"
+			            	rendered="${'Integer' == par.translatedClassName}"
+			            	required="${false}"
+			            	mask="#" 
+			            	onfocus="this.select();"/>						
+					</p:column>
+					
+				</p:dataTable>
+				<br/>
+				
+				<p:commandButton 
+					process="@form" 
+					icon="ui-icon-circle-check"
+					value="#{msgs['reportJasper.parameter.run']}"
+					update=":panelJasperReport"
+					onsuccess="dialogParametros.hide();statusDialog.show();dialogRelatorio.show();"
+					styleClass="commandButtonCenter"/>
+				
+		</h:form>
+
+</ui:composition>

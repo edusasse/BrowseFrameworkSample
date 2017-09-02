@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ai="http://java.sun.com/jsf/composite/composite/ai"
+	xmlns:sec="http://www.springframework.org/security/tags">
+ 
+		<ai:panelGridApp>
+		 
+		 	<ui:remove>PESSOA</ui:remove>
+		 	<ai:outputLabel 
+	       		for="txtTelefonePessoa"
+	       		label="#{msgs['app.telefone.pessoa']}"/>
+	       		
+	       	<ui:remove>PESSOA - Para exibir quando estiver alterando</ui:remove>
+	       	<c:if test="#{telefoneAppBean.dto.pessoa != null}">
+		       	<ai:outputText
+		       		id="txtTelefonePessoa"
+		       		value="#{telefoneAppBean.dto.pessoa.nome}"/>
+	       	</c:if>
+	       	<ui:remove>PESSOA - Para entrada quando estiver cadastrando um novo cliente</ui:remove>
+	       	<c:if test="#{telefoneAppBean.dto.pessoa == null}">
+		       	<ai:autoComplete 
+					id="txtTelefonePessoa"
+					label="#{msgs['app.telefone.pessoa']}"
+					bean="#{pessoaBean}"
+					size="100"
+					required="true"
+					value="#{telefoneAppBean.dto.pessoa}"
+					itemLabel="#{var.nome}"/>
+	       	</c:if>
+	       	
+		 	<ui:remove>CONTATO</ui:remove>
+		 	<ai:outputLabel 
+	       		for="txtTelefoneContato"
+	       		label="#{msgs['app.telefone.contato']}"/>
+	       		
+       		<ai:inputText 
+	       		id="txtTelefoneContato"
+	       		label="#{msgs['app.telefone.contato']}"
+	       		size="100" 
+	       		maxlength="${func:getHibernateColmumnInfo('telefoneAppBean.dto.contato','length')}"
+	       		required="${not func:getHibernateColmumnInfo('telefoneAppBean.dto.contato','nullable')}"
+	       		value="#{telefoneAppBean.dto.contato}" />
+	       	
+	       	<ui:remove>TIPO TELEFONE</ui:remove>
+		 	<ai:outputLabel 
+	       		for="txtTelefoneTipoTelefone"
+	       		label="#{msgs['app.telefone.tipoTelefone']}"/>
+	       		
+       		<ai:autoComplete 
+				id="txtTelefoneTipoTelefone"
+				label="#{msgs['app.telefone.tipoTelefone']}"
+				bean="#{tipoTelefoneAppBean}"
+				size="100"
+				value="#{telefoneAppBean.dto.tipoTelefone}"
+				targetPropertyName="telefoneAppBean.dto.tipoTelefone"
+				itemLabel="#{var.descricao}"
+				required="${not func:getHibernateColmumnInfo('telefoneAppBean.dto.tipoTelefone','nullable')}"/>
+	       		
+	       	<ui:remove>NUMERO TELEFONE</ui:remove>
+		 	<ai:outputLabel 
+	       		for="txtTelefoneNumeroTelefone"
+	       		numberMaksValue="true"
+	       		label="#{msgs['app.telefone.numero']}"/>
+	       		
+       		<ai:inputText 
+	       		id="txtTelefoneNumeroTelefone"
+	       		label="#{msgs['app.telefone.numero']}"
+	       		size="30"
+	       		required="${not func:getHibernateColmumnInfo('telefoneAppBean.dto.numero','nullable')}"
+	       		value="#{telefoneAppBean.dto.numero}"/>
+
+	</ai:panelGridApp> 
+    
+</ui:composition>

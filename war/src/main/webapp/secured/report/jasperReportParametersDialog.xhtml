@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+		<p:dialog
+			header="#{msgs['reportJasper.parameter.dialogTitle']}" 
+			widgetVar="dialogParametros"
+			modal="true" 
+			maximizable="true" 
+			resizable="false" 
+			hideEffect="fade" 
+			height="500"
+			dynamic="true" 
+			width="600">
+			
+			<p:outputPanel id="panelJasperReportParameters" layout="block">
+				<c:if test="#{relatorioJasperReportsBean.currentReport != null}">
+				 	<ui:include src="/secured/report/parametros.xhtml" />
+				 </c:if>
+			</p:outputPanel>
+			  
+		</p:dialog>
+
+</ui:composition>

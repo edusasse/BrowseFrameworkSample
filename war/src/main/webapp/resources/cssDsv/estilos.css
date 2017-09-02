@@ -1,0 +1,231 @@
+@charset "iso-8859-1";
+
+a {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+}
+
+p {
+	margin: 0;
+	padding: 0;
+}
+
+img {
+	border: 0;
+}
+
+h1 {
+	margin: 0;
+	padding: 0;
+}
+
+h2 {
+	margin: 0;
+	padding: 0;
+	font-size: 24px;
+	color: #0072bb;
+}
+
+h3 {
+	margin: 0;
+	padding: 0;
+	font-size: 18px;
+}
+
+h4 {
+	margin: 0;
+	padding: 0;
+	color: #0072bb;
+}
+
+h5 {
+	margin: 0;
+	padding: 0;
+}
+
+h6 {
+	margin: 0;
+	padding: 0;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.caminho {
+	float: left;
+	width: 729px;
+	height: 15px;
+	margin-top: 40px;
+	margin-left: 1px;
+	margin-right: 1px;
+	margin-bottom: 10px;
+	font-size: 11px;
+	font-weight: bold;
+	color: #7f7f7f;
+	background: #FFF
+		url(#{request.contextPath}/resources/imagens/bgconteudointerna.jpg)
+		top;
+	padding-top: 7px;
+}
+
+.caminho a {
+	color: #ed1c24;
+	margin: 0 5px;
+}
+.caminho .texto {
+	color: #ed1c24;
+	margin: 0 5px;
+}
+
+.caminho a:hover {
+	text-decoration: underline;
+}
+
+.tituloPagina {
+	float: left;
+	width: 729px;
+	height: 47px;
+	color: #0072bb;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.tituloPagina img {
+	padding-top: 6px;
+	padding-left: 8px;
+	float: left;
+}
+
+.font-15-cinza {
+	color: #818186;
+	text-decoration: none;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.font-15-preto {
+	color: black;
+	text-decoration: none;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.font-14-cinza {
+	color: #818186;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.font-14-preta {
+	color: black;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.font-14-vermelha {
+	color: green;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: bold;
+}
+.font-14-AA {
+	color: green;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.font-14-ED {
+	color: yellow;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: bold;
+}
+.font-14-SA {
+	color: red;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: bold;
+}
+.font-14-ri {
+	color: red;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+
+.font-13-cinza {
+	color: #818186;
+	text-decoration: none;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.font-12-cinza {
+	color: #818186;
+	text-decoration: none;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.font-15-azul {
+	color: #0072bb;
+	text-decoration: none;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.font-13-azul {
+	color: #0072bb;
+	text-decoration: none;
+	font-size: 13px;
+	font-weight: normal;
+}
+
+.font-14-negrito {
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: bold;
+	color: #000D20;
+}
+
+.font-negrito {
+	font-weight: bold;
+}
+
+.ui-panelgrid tr, .ui-panelgrid td {
+	border:0 !important;
+	background: none !important;
+}
+
+.ui-anuncio td {
+	border-color: transparent !important;
+	border-style: none !important;
+	border-width: 0px !important;
+	padding: 0px !important;
+	border-collapse: inherit !important;
+}
+
+.ui-anuncio {
+	border-collapse: inherit !important;
+}
+
+.ui-anuncio-chkbox {
+	border-bottom-left-radius: 0px !important;
+	border-bottom-right-radius: 0px !important;
+	border-top-left-radius: 0px !important;
+	border-top-right-radius: 0px !important;
+	background-image: none !important;
+}

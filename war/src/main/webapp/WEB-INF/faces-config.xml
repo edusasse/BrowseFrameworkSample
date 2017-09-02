@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+	version="2.0">
+	<application>
+		
+		<!-- SpringBeanFacesELResolver INTEGRA SPRING E JSF -->
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+		
+		<!-- LOCAL -->
+		<locale-config>
+			<default-locale>pt_BR</default-locale>
+        	<supported-locale>pt_BR</supported-locale>
+		</locale-config>
+		
+		<!-- ARQUIVO DE MENSAGENS -->
+		<resource-bundle>  
+		    <base-name>config.ai.messages.messages</base-name>  
+		    <var>msgs</var>  
+		 </resource-bundle>  
+		 <locale-config>  
+		 	<default-locale>pt_BR</default-locale>
+		 	<supported-locale>pt_BR</supported-locale>
+		 	<supported-locale>en_US</supported-locale>
+		 </locale-config>  
+		 <message-bundle>config.ai.messages.messages</message-bundle>
+		
+		
+		<!-- PROPRIEDADES DE AMBIENTE -->
+		<resource-bundle>
+			<base-name>config.ai.properties.local</base-name>
+			<var>sysprops</var>
+		</resource-bundle>
+		
+		<!-- ACTION LISTENERS -->		
+		<!-- Caso ocorra alguma excessão durante o action listener que por alguma razão não seja capturada pelo ExceptionHandlerInterceptor -->
+	    <action-listener>br.com.browseframework.jsfprimefaces.listener.ActionListener</action-listener>
+	</application>
+	
+	<!-- Resolve o nome do bean do facade utilizado do Dto Converter -->
+	<managed-bean>
+	  <managed-bean-name>idFacadeResolverBean</managed-bean-name>
+	  <managed-bean-class>br.com.browseframework.jsfprimefaces.converter.IdCrudFacadeSpringResolverImpl</managed-bean-class>
+	  <managed-bean-scope>application</managed-bean-scope>
+     </managed-bean>
+
+	<!-- Intecepta excessões e apresenta em tela -->
+	<factory>
+	  <exception-handler-factory>br.com.browseframeworksample.lifecycle.listener.AIExceptionHandlerInterceptorFactory</exception-handler-factory>
+	</factory>
+
+	<!-- REGRAS DE NAVEGAÇÃO -->
+	<!-- =================== -->
+	<!-- Página de erro -->
+	<navigation-rule>
+	    <navigation-case>
+	        <from-outcome>erro</from-outcome>
+	        <to-view-id>/errorPage.xhtml</to-view-id>
+	    </navigation-case>
+	</navigation-rule>
+	 
+	<!-- LISTENERS NO CICLO DE VIDA JSF -->
+	<!-- ============================== -->
+	<lifecycle>
+		<phase-listener>br.com.browseframework.jsfprimefaces.listener.MessageHandler</phase-listener>
+		<phase-listener>br.com.browseframeworksample.lifecycle.listener.LoginErrorPhaseListener</phase-listener>
+		<!-- OmniFaces para limpar o submitted value quando ocorrer algum erro ao submeter o form -->
+		<phase-listener>org.omnifaces.eventlistener.ResetInputAjaxActionListener</phase-listener>		
+	</lifecycle>
+	
+	<!-- CONVERTER -->
+	<!-- ========= -->
+	<converter>
+		<converter-id>genericIndexConverter</converter-id>
+		<converter-class>br.com.browseframework.jsfprimefaces.converter.GenericIndexConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>genericIdFacadeConverter</converter-id>
+		<converter-class>br.com.browseframework.jsfprimefaces.converter.GenericIdFacadeConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>numericConverter</converter-id>
+		<converter-class>br.com.browseframework.jsfprimefaces.converter.NumericConverter</converter-class>
+	</converter>
+	<converter>
+	     <converter-id>cnpjConverter</converter-id>
+	     <converter-class>br.com.browseframework.jsfprimefaces.util.converter.CnpjConverter</converter-class>
+	</converter>
+		
+	
+	<!-- VALIDATOR -->
+	<!-- ========= -->
+	<validator>
+	    <validator-id>cnpjValidator</validator-id>
+	    <validator-class>br.com.browseframework.jsfprimefaces.util.validator.CnpjValidator</validator-class>
+	</validator>
+</faces-config>

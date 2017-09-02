@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 5.1.2  -->
+<!-- 2017-05-19T21:28:07 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="REL001" language="java" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f2f88bac-e32c-444c-bea1-eb01a058378e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CODIGO DO CLIENTE" class="java.lang.Long"/>
+	<parameter name="DATA INICIAL PERIODO" class="java.util.Date"/>
+	<parameter name="DATA FINAL PERIODO" class="java.util.Date"/>
+	<parameter name="PERIODO ESTA FECHADO?" class="java.lang.Boolean"/>
+	<queryString>
+		<![CDATA[select
+	p.nom_pessoa
+from
+	cliente cli
+		inner join pessoa p
+		on cli.cod_pessoa = p.cod_pessoa
+where cli.cod_cliente = $P{CODIGO DO CLIENTE}]]>
+	</queryString>
+	<field name="nom_pessoa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="GRAFICOS">
+		<groupHeader>
+			<band/>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="1" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="87" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="554" height="81" uuid="4add5e5f-e97e-4b2c-8476-50d0d13638c4"/>
+				<imageExpression><![CDATA[getClass().getResourceAsStream("/report/logo_site.png")]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="165" y="0" width="389" height="14" uuid="f1efb871-004a-4c4b-abf7-d7b9f71d75c7"/>
+				<textElement textAlignment="Right">
+					<font fontName="Verdana" size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PERIODO ESTA FECHADO?} ? "" : "Período em aberto!"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="205" splitType="Stretch">
+			<subreport isUsingCache="false">
+				<reportElement positionType="Float" x="3" y="23" width="552" height="40" uuid="3d6190c0-b0eb-4eba-b8b2-1da594867f5d"/>
+				<subreportParameter name="DATA INICIAL PERIODO">
+					<subreportParameterExpression><![CDATA[$P{DATA INICIAL PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CODIGO DO CLIENTE">
+					<subreportParameterExpression><![CDATA[$P{CODIGO DO CLIENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATA FINAL PERIODO">
+					<subreportParameterExpression><![CDATA[$P{DATA FINAL PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[getClass().getResourceAsStream("/report/REL001_SUB_1.jasper")]]></subreportExpression>
+			</subreport>
+			<subreport isUsingCache="false">
+				<reportElement positionType="Float" x="3" y="66" width="552" height="40" uuid="d742eee3-a3e9-4406-91c6-3ea219fcf70c"/>
+				<subreportParameter name="DATA INICIAL PERIODO">
+					<subreportParameterExpression><![CDATA[$P{DATA INICIAL PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CODIGO DO CLIENTE">
+					<subreportParameterExpression><![CDATA[$P{CODIGO DO CLIENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATA FINAL PERIODO">
+					<subreportParameterExpression><![CDATA[$P{DATA FINAL PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[getClass().getResourceAsStream("/report/REL001_SUB_2.jasper")]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="3" y="109" width="552" height="40" uuid="d742eee3-a3e9-4406-91c6-3ea219fcf70c"/>
+				<subreportParameter name="DATA INICIAL PERIODO">
+					<subreportParameterExpression><![CDATA[$P{DATA INICIAL PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CODIGO DO CLIENTE">
+					<subreportParameterExpression><![CDATA[$P{CODIGO DO CLIENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATA FINAL PERIODO">
+					<subreportParameterExpression><![CDATA[$P{DATA FINAL PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[getClass().getResourceAsStream("/report/REL001_SUB_3.jasper")]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement positionType="Float" x="0" y="152" width="555" height="1" uuid="1f5674d4-da55-47eb-ac4f-c78e2222125d"/>
+			</break>
+			<subreport>
+				<reportElement positionType="Float" x="4" y="156" width="552" height="40" uuid="d742eee3-a3e9-4406-91c6-3ea219fcf70c"/>
+				<subreportParameter name="DATA INICIAL PERIODO">
+					<subreportParameterExpression><![CDATA[$P{DATA INICIAL PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CODIGO DO CLIENTE">
+					<subreportParameterExpression><![CDATA[$P{CODIGO DO CLIENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATA FINAL PERIODO">
+					<subreportParameterExpression><![CDATA[$P{DATA FINAL PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[getClass().getResourceAsStream("/report/REL001_SUB_4.jasper")]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="4" y="4" width="48" height="14" uuid="373c10db-db70-4eac-a2d4-5525a8d1f57b"/>
+				<textElement>
+					<font fontName="Verdana" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="52" y="4" width="274" height="14" uuid="c27443af-7ef5-4562-bb50-637a1ec63986"/>
+				<textFieldExpression><![CDATA[$F{nom_pessoa}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="403" y="4" width="60" height="14" uuid="3e4d9944-100c-40a5-ac43-511154299096"/>
+				<textElement>
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DATA INICIAL PERIODO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="494" y="4" width="60" height="14" uuid="f1efb871-004a-4c4b-abf7-d7b9f71d75c7"/>
+				<textElement>
+					<font fontName="Verdana"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DATA FINAL PERIODO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="326" y="4" width="75" height="14" uuid="373c10db-db70-4eac-a2d4-5525a8d1f57b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Verdana" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Período de:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="463" y="4" width="28" height="14" uuid="373c10db-db70-4eac-a2d4-5525a8d1f57b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Verdana" isBold="true"/>
+				</textElement>
+				<text><![CDATA[até:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

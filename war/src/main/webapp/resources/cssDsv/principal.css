@@ -1,0 +1,70 @@
+@charset "utf-8";
+
+.principal_central {
+	background-color: white;
+	opacity:0.9;
+	margin: 0 auto;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 20px;
+	padding-bottom: 100px;
+	min-height: 500px;
+	width: 95%;
+	background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(255,255,255,1) 79%, rgba(255,255,255,0.29) 94%, rgba(255,255,255,0) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(79%,rgba(255,255,255,1)), color-stop(94%,rgba(255,255,255,0.29)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 79%,rgba(255,255,255,0.29) 94%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 79%,rgba(255,255,255,0.29) 94%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 79%,rgba(255,255,255,0.29) 94%,rgba(255,255,255,0) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 79%,rgba(255,255,255,0.29) 94%,rgba(255,255,255,0) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+		
+}
+ 
+.commandButtonCenter {
+	display: table;
+	margin: 0 auto;
+}
+
+.appMegaMenuUI .ui-icon-document {
+	
+}
+
+.appMegaMenuUI .ui-menuitem-link {
+    min-width: 100px;
+    font-size: 12px;
+}
+
+.appMegaMenuUI .ui-menuitem-link:HOVER {
+    min-width: 100px;
+    font-size: 12px;
+}
+
+.appMegaMenuUI .ui-icon-triangle-1-s {
+	background-image: none !important;
+}
+
+.appMegaMenuUI {
+	background-image: none !important;
+	background-color: transparent;
+	border: none;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	margin-left: 225px;
+}
+
+.appSubMenuUI {
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+}
+
+.ui-menuitem-link {
+	
+}
+
+.appMenuItemUI {
+	
+}

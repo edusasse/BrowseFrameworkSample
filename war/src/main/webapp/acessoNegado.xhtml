@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ai="http://java.sun.com/jsf/composite/composite/ai"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:func="ai/functions">
+	
+	<pe:head 
+		title="#{msgs['title.applicationName']}"
+		shortcutIcon="#{request.contextPath}/resources/imagens/logo.ico">
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta http-equiv="content-style-type" content="text/css"/>
+			<meta name="language" content="portuguese" />
+		</f:facet>
+		<ui:remove> === </ui:remove>
+		<ui:remove> CSS </ui:remove>
+		<ui:remove> === </ui:remove>
+		<h:outputStylesheet library="css" name="browseframeworksample-war.min.css" />
+		<ui:remove> DESENVOLVIMENTO:
+			<h:outputStylesheet library="cssDsv" name="estilos.css" />
+			<h:outputStylesheet library="cssDsv" name="base.css" />
+			<h:outputStylesheet library="cssDsv" name="principal.css" />
+			<h:outputStylesheet library="cssDsv" name="default.css" />
+			<h:outputStylesheet library="cssDsv" name="actionMenu.css" />
+		</ui:remove>
+		<ui:remove> =========== </ui:remove>
+		<ui:remove> JAVA SCRIPT </ui:remove>
+		<ui:remove> =========== </ui:remove>
+		<ui:remove> JQuery do proprio primefaces </ui:remove>
+		<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+		<ui:remove> Primefaces </ui:remove>
+		<h:outputScript library="primefaces" name="primefaces.js" target="head" />
+		<ui:remove> Primefaces-extensions </ui:remove>
+		<h:outputScript library="primefaces-extensions" name="primefaces-extensions.js" target="head" />
+		<ui:remove> JavaScript com funcoes especificas </ui:remove>
+		<h:outputScript library="js" name="browseframeworksample-war.min.js" />
+		<ui:remove> DESENVOLVIMENTO:
+			<h:outputScript library="jsDsv" name="ai.1.0.js" />
+		</ui:remove>
+	</pe:head>
+	
+	<h:body>  
+  		
+   		<p:dialog header="#{msgs['login.acessoNegado']}"
+   				  modal="true"
+   				  closable="false"
+   				  position="center"
+   				  widgetVar="modalNegado"
+   				  minWidth="500"
+   				  width="400"
+   				  showEffect="fade" 
+   		    	  draggable="false"
+   		    	  resizable="false"
+   		    	  visible="true">
+   		    	  
+   		    <center>
+   		    	  
+   		    	<img src="#{facesContext.externalContext.requestContextPath}/resources/imagens/accessDenied.gif" />
+	   		    
+	   		    <br />
+	   		    <br />
+	   		    <br />	   		    	  	 
+	    		<h:outputLabel  
+					value="#{msgs['login.acessoNegado']}" 
+					styleClass="font-15-preto"/>
+	   		    <br />	   		    	  	 
+	   		    <br />	   		    	  	 
+	   		    <br />
+	   		    
+	   		    <h:outputLink styleClass="font-12-cinza" value="#{facesContext.externalContext.requestContextPath}">Voltar</h:outputLink>
+    		 			 
+   		    </center>
+    				   				
+ 		</p:dialog>	
+ 
+	</h:body>
+
+</html>

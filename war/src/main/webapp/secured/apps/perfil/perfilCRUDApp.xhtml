@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ai="http://java.sun.com/jsf/composite/composite/ai"
+	xmlns:sec="http://www.springframework.org/security/tags">
+ 
+		<ai:panelGridApp>
+		 
+		 	<ui:remove>NOME</ui:remove>
+		 	<ai:outputLabel 
+	       		for="txtPerfilNome"
+	       		label="#{msgs['app.perfil.nome']}"/>
+	       		
+       		<ai:inputText 
+	       		id="txtPerfilNome"
+	       		size="100" 
+	       		maxlength="${func:getHibernateColmumnInfo('perfilAppBean.dto.nome','length')}"
+	       		required="${not func:getHibernateColmumnInfo('perfilAppBean.dto.nome','nullable')}"
+	       		value="#{perfilAppBean.dto.nome}" />
+	       	
+	       	<ui:remove>RAZAO SOCIAL</ui:remove>
+		 	<ai:outputLabel 
+	       		for="txtPerfilRole"
+	       		label="#{msgs['app.perfil.role']}"/>
+	       		
+       		<ai:inputText 
+	       		id="txtPerfilRole"
+	       		size="100" 
+	       		maxlength="${func:getHibernateColmumnInfo('perfilAppBean.dto.role','length')}"
+	       		required="${not func:getHibernateColmumnInfo('perfilAppBean.dto.role','nullable')}"
+	       		value="#{perfilAppBean.dto.role}" />
+	       	
+	</ai:panelGridApp> 
+    
+</ui:composition>

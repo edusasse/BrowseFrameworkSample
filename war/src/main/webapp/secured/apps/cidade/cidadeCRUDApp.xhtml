@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ai="http://java.sun.com/jsf/composite/composite/ai"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:pretty="http://ocpsoft.com/prettyfaces">
+ 
+ 		<ai:panelGridApp>
+		 
+		 	<ui:remove>NOME</ui:remove>
+			<ai:outputLabel 
+				for="txtNome" 
+				label="#{msgs['app.cidade.nome']}"/>
+				
+	       	<ai:inputText 
+	       		id="txtNome"
+	       		label="#{msgs['app.cidade.nome']}"
+	       		value="#{cidadeAppBean.dto.nome}"
+	       		maxlength="${func:getHibernateColmumnInfo('cidadeAppBean.dto.nome','length')}"
+	       		required="${not func:getHibernateColmumnInfo('cidadeAppBean.dto.nome','nullable')}" />
+	       	
+	       	<ui:remove>UF</ui:remove>
+	       	<ai:outputLabel 
+	       		for="autUf" 
+	       		label="#{msgs['app.cidade.uf']}"/>
+	       		
+			<ai:autoComplete 
+				id="autUf"
+				label="#{msgs['app.cidade.uf']}"
+				required="true"
+				bean="#{unidadeFederacaoAppBean}"
+				value="#{cidadeAppBean.dto.uf}"
+				targetPropertyName="cidadeAppBean.dto.uf"
+				itemLabel="${func:concat(var.nome,var.sigla,' - ')}"/>
+				
+		</ai:panelGridApp>
+		 
+</ui:composition>

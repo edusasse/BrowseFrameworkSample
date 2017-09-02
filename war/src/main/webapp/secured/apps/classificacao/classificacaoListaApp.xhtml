@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ai="http://java.sun.com/jsf/composite/composite/ai"
+	xmlns:sec="http://www.springframework.org/security/tags">
+		
+		<ai:dataTableAppList>  
+	              
+			<p:column 
+				headerText="#{msgs['app.classificacao.nome']}" 
+				style="white-space: nowrap;"
+				sortBy="#{dto.nome}"
+				filterBy="#{dto.nome}">
+			        <h:outputText value="#{dto.nome}"/>
+	        </p:column>
+	        
+		</ai:dataTableAppList>
+	 
+</ui:composition>

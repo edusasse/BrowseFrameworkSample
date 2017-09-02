@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	
+    <p:confirmDialog 
+		id="confirmDialogRemove"
+		message="#{msgs['app.default.removeConfirmation.message']}"
+		header="#{msgs['app.default.removeConfirmation.header']}"
+		severity="alert"
+		widgetVar="confirmationRemove">
+
+		<p:commandButton 
+			id="confirmRemove" 
+			value="#{msgs['app.default.removeConfirmation.yes']}"
+			oncomplete="confirmationRemove.hide()"
+			update=":all"
+			actionListener="#{aplicacaoBean.doProcessarBotaoExcluir()}" />
+		<p:commandButton 
+			id="declineRemove" 
+			value="#{msgs['app.default.removeConfirmation.no']}"
+			onclick="confirmationRemove.hide()" 
+			type="button" />
+
+	</p:confirmDialog>
+         
+</ui:composition>

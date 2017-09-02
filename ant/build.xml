@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<project name="Build Sample - 1.0.0" default="install-all" basedir="..">
+	<property environment="env" />
+    <property file="war/ant/${env.USERNAME}-deploy-build.properties"/>
+    <property file="war/ant/deploy-build.properties" />
+
+	<condition property="mvn.exec" value="mvn.bat" else="mvn">
+		<os family="windows"/>
+	</condition>
+	
+	<condition property="WarClassesDoesNotExist">
+		<not>
+		  <available file="${basedir}/war/target/classes"/>
+		</not>
+	</condition>
+		
+	<!-- colocar o value vazio para executar os junits -->
+	<property name="skip.test" value="-Dmaven.test.skip=true"/>
+	
+	<!-- ################################ -->
+	<!--              INSTALL             -->
+	<!-- ################################ -->
+	<target name="install-all" depends="compile-war">
+		<exec executable="${mvn.exec}" failonerror="true" dir="./">
+			<arg value="clean" />
+			<arg value="install" />
+			<arg value="${skip.test}" />
+		</exec>
+	</target>
+
+	<target name="install-business">
+		<exec executable="${mvn.exec}" failonerror="true" dir="business">
+			<arg value="clean" />
+			<arg value="install" />
+			<arg value="${skip.test}" />
+		</exec>
+	</target>
+	
+	<target name="install-ear">
+		<exec executable="${mvn.exec}" failonerror="true" dir="ear">
+			<arg value="clean" />
+			<arg value="install" />
+			<arg value="${skip.test}" />
+		</exec>
+	</target>
+
+	<target name="install-war" depends="compile-war">
+		<exec executable="${mvn.exec}" failonerror="true" dir="war">
+			<!--arg value="clean" /-->
+			<arg value="install" />
+			<arg value="${skip.test}" />
+		</exec>
+	</target>
+	
+	 
+	<!-- ################################ -->
+	<!--              JUNIT               -->
+	<!-- ################################ -->
+	<!-- executa os junits -->
+	<target name="test">
+		<exec executable="${mvn.exec}" failonerror="true" dir="./">
+			<arg value="test" />
+		</exec>
+	</target>
+	 
+	<!-- ################################ -->
+	<!--         ECLIPSE INICIAL          -->
+	<!-- ################################ -->
+	<!-- gera os arquivos referentes ao (.project, .classpath, ...) -->
+	<target name="eclipse-inicial-all">
+		<antcall target="eclipse-inicial-business"/>
+		<antcall target="eclipse-inicial-war"/>
+	</target>
+			
+	<!-- gera os arquivos referentes ao (.project, .classpath, ...) -->
+	<target name="eclipse-inicial-business">
+		<exec executable="${mvn.exec}" failonerror="true" dir="business">
+			<arg value="eclipse:clean" />
+			<arg value="eclipse:eclipse" />
+		</exec> 
+
+		<!-- Apaga arquivo da pasta raiz que não é um projeto Eclipse -->
+		<delete file=".project" />
+	</target>
+	
+	<!-- gera os arquivos referentes ao (.project, .classpath, ...) -->
+	<target name="eclipse-inicial-war">
+		<exec executable="${mvn.exec}" failonerror="true" dir="war">
+			<arg value="eclipse:clean" />
+			<arg value="eclipse:eclipse" />
+		</exec> 
+
+		<!-- Apaga arquivo da pasta raiz que não é um projeto Eclipse -->
+		<delete file=".project" />
+	</target>
+	
+	<!-- ################################ -->
+	<!--             ECLIPSE              -->
+	<!-- ################################ -->
+	<!-- gera os arquivos referentes ao (.project, .classpath, ...) -->
+	<target name="eclipse-all">
+		<antcall target="eclipse-business"/>
+		<antcall target="eclipse-war"/>
+	</target>
+	 
+	<!-- gera os arquivos referentes ao (.project, .classpath, ...) -->
+	<target name="eclipse-business">
+		<exec executable="${mvn.exec}" failonerror="true" dir="business">
+			<arg value="eclipse:clean" />
+			<arg value="eclipse:eclipse" />
+			<arg value="-Declipse.useProjectReferences=false"/>
+			<arg value="-DdownloadSources=true"/>
+		</exec>
+		<!-- Apaga arquivo da pasta raiz que não é um projeto Eclipse -->
+		<delete file=".project" />
+	</target>
+		
+	<!-- gera os arquivos referentes ao (.project, .classpath, ...) -->
+	<target name="eclipse-war">
+	 
+		<exec executable="${mvn.exec}" failonerror="true" dir="war">
+			<arg value="eclipse:clean" />
+			<arg value="eclipse:eclipse" />
+			<arg value="-Declipse.useProjectReferences=false"/>
+			<arg value="-DdownloadSources=true"/>
+			<arg value="-DwtpContextName=browseframeworksample"/>
+			<arg value="-Dwtpversion=2.0"/>
+		</exec>
+		<!-- Apaga arquivo da pasta raiz que não é um projeto Eclipse -->
+		<delete file=".project" />
+	</target>
+	
+	<!-- Compilar o war -->
+	<target name="compile-war" if="WarClassesDoesNotExist">
+		<exec executable="${mvn.exec}" failonerror="true" dir="war">
+			<arg value="clean" />
+			<arg value="compile" />
+			<arg value="${skip.test}" />
+		</exec>
+	</target>
+	
+	<!-- Verifica se os fontes java ja se encontram compilados -->
+	<condition property="warClassesExistCondition">
+		<not>
+		  <available file="${basedir}/war/target/classes"/>
+		</not>
+	</condition>
+	
+</project>

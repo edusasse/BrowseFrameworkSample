@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	 
+	<parent>
+		<groupId>br.com.browseframework</groupId>
+		<artifactId>browsefrw</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>br.com.browseframeworksample</groupId>
+	<artifactId>browseframeworksample</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	
+	<name>Sample</name>
+	<description>Projeto Sample</description>
+	
+  <modules>
+    <module>business</module>
+    <module>war</module>
+    <module>ear</module>
+  </modules>
+  
+	<!-- VERSÕES UTILIZADAS PELOS SISTEMAS  -->
+	<properties>
+		<!-- VERSÕES DOS PROJETOS [inicio] -->
+		<browseframeworksample.business.version>0.0.1-SNAPSHOT</browseframeworksample.business.version>
+		<!-- VERSÕES DOS PROJETOS [fim] -->
+	</properties>
+
+	<!-- DEPENDÊNCIAS UTILIZADAS PELO PROJETO BASE E QUE POSSAM SER PROPAGADAS PARA OUTROS SISTEMAS -->
+	<dependencies>
+	</dependencies>
+
+</project>

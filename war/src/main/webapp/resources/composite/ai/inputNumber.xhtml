@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:func="ai/functions">
+ 
+    <composite:interface>
+ 
+ 		<ui:remove>ID</ui:remove>
+    	<composite:attribute name="id" required="true"/>
+    	<ui:remove>VALUE</ui:remove>
+    	<composite:attribute name="value" required="true"/>
+    	<ui:remove>REQUIRED</ui:remove>
+    	<composite:attribute name="required" default="false"/>
+    	<ui:remove>NUMERO DE CASAS DECIMAIS</ui:remove>
+    	<composite:attribute name="decimalPlaces" default="6"/>
+    	<ui:remove>SEPARADOR MILHAR</ui:remove>
+    	<composite:attribute name="thousandSeparator" default="."/>
+    	<ui:remove>DISABLED</ui:remove>
+    	<composite:attribute name="disabled" required="false"/>
+    	
+    </composite:interface>
+ 
+    <composite:implementation>
+	
+		<c:if test="#{cc.attrs.widgetVar != null}">
+			<pe:inputNumber 
+				id="#{cc.attrs.id}"
+	       		required="#{cc.attrs.required}"
+	       		value="#{cc.attrs.value}"
+	       		decimalPlaces="#{cc.attrs.decimalPlaces}"
+	       		widgetVar="#{cc.attrs.widgetVar}"
+	       		decimalSeparator=","
+	       		thousandSeparator="#{cc.attrs.thousandSeparator}"
+	       		disabled="#{cc.attrs.disabled}"/>
+	    </c:if>
+	    
+	    <c:if test="#{cc.attrs.widgetVar == null}">
+			<pe:inputNumber 
+				id="#{cc.attrs.id}"
+	       		required="#{cc.attrs.required}"
+	       		value="#{cc.attrs.value}"
+	       		decimalPlaces="#{cc.attrs.decimalPlaces}"
+	       		decimalSeparator=","
+	       		thousandSeparator="#{cc.attrs.thousandSeparator}"
+	       		disabled="#{cc.attrs.disabled}"/>
+	    </c:if>
+            
+    </composite:implementation>
+ 
+</html>

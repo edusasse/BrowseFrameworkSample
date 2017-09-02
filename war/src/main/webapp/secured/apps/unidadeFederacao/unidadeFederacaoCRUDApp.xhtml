@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ai="http://java.sun.com/jsf/composite/composite/ai"
+	xmlns:sec="http://www.springframework.org/security/tags">
+ 
+ 	<ai:panelGridApp>
+ 	
+		<ai:outputLabel 
+			for="txtUFNome" 
+			label="#{msgs['app.unidadeFederacao.nome']}"/>
+       	
+       	<ai:inputText 
+       		id="txtUFNome"
+       		label="#{msgs['app.unidadeFederacao.nome']}" 
+       		value="#{unidadeFederacaoAppBean.dto.nome}" />
+
+       	<ai:outputLabel 
+       		for="txtUFSigla"
+       		label="#{msgs['app.unidadeFederacao.sigla']}"/>
+       		
+       	<ai:inputText 
+       		id="txtUFSigla"
+       		label="#{msgs['app.unidadeFederacao.sigla']}"
+       		uppercase="true"
+       		size="10"
+       		value="#{unidadeFederacaoAppBean.dto.sigla}"
+       		maxlength="${func:getHibernateColmumnInfo('unidadeFederacaoAppBean.dto.sigla','length')}"
+	       	required="${not func:getHibernateColmumnInfo('unidadeFederacaoAppBean.dto.sigla','nullable')}" />
+       	
+	</ai:panelGridApp>
+	
+</ui:composition>

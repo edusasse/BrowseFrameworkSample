@@ -1,0 +1,121 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ai="http://java.sun.com/jsf/composite/composite/ai"
+	xmlns:sec="http://www.springframework.org/security/tags">
+ 
+		<ai:panelGridApp>
+		 
+		 	<ui:remove>Nome</ui:remove>
+		 	<ai:outputLabel 
+	       		for="txtPessoaJuridicaNome"
+	       		label="#{msgs['app.pessoa.nome']}"/>
+	       		
+       		<ai:inputText 
+	       		id="txtPessoaJuridicaNome"
+	       		label="#{msgs['app.pessoa.nome']}"
+	       		size="100" 
+	       		maxlength="${func:getHibernateColmumnInfo('pessoaJuridicaAppBean.dto.nome','length')}"
+	       		required="${not func:getHibernateColmumnInfo('pessoaJuridicaAppBean.dto.nome','nullable')}"
+	       		value="#{pessoaJuridicaAppBean.dto.nome}" />
+	       	
+	       	<ui:remove>RAZAO SOCIAL</ui:remove>
+		 	<ai:outputLabel 
+	       		for="txtPessoaJuridicaRazaoSocial"
+	       		label="#{msgs['app.pessoaJuridica.razaoSocial']}"/>
+	       		
+       		<ai:inputText 
+	       		id="txtPessoaJuridicaRazaoSocial"
+	       		label="#{msgs['app.pessoaJuridica.razaoSocial']}"
+	       		size="100" 
+	       		maxlength="${func:getHibernateColmumnInfo('pessoaJuridicaAppBean.dto.razaoSocial','length')}"
+	       		required="${not func:getHibernateColmumnInfo('pessoaJuridicaAppBean.dto.razaoSocial','nullable')}"
+	       		value="#{pessoaJuridicaAppBean.dto.razaoSocial}" />
+	       		
+	       	<ui:remove>CNPJ</ui:remove>
+		 	<ai:outputLabel 
+	       		for="txtPessoaJuridicaCNPJ"
+	       		numberMaksValue="true"
+	       		label="#{msgs['app.pessoaJuridica.cnpj']}"/>
+	       		
+       		<ai:inputText 
+	       		id="txtPessoaJuridicaCNPJ"
+	       		label="#{msgs['app.pessoaJuridica.cnpj']}"
+	       		size="30"
+	       		mask="99.999.999/9999-99"
+	       		commitEdit="true"
+	       		required="${not func:getHibernateColmumnInfo('pessoaJuridicaAppBean.dto.cnpj','nullable')}"
+	       		value="#{pessoaJuridicaAppBean.dto.cnpj}"
+	       		validatorId="cnpjValidator"/>
+	       		
+	       		
+	       	<ui:remove>INSCRICAO ESTADUAL</ui:remove>
+		 	<ai:outputLabel 
+	       		for="txtPessoaJuridicaInscricaoEstadual"
+	       		label="#{msgs['app.pessoaJuridica.inscricaoEstadual']}"/>
+	       		
+       		<ai:inputText 
+	       		id="txtPessoaJuridicaInscricaoEstadual"
+	       		label="#{msgs['app.pessoaJuridica.inscricaoEstadual']}"
+	       		size="30"
+	       		maxlength="${func:getHibernateColmumnInfo('pessoaJuridicaAppBean.dto.inscricaoEstadual','length')}"
+	       		required="${not func:getHibernateColmumnInfo('pessoaJuridicaAppBean.dto.inscricaoEstadual','nullable')}"
+	       		value="#{pessoaJuridicaAppBean.dto.inscricaoEstadual}" />
+			
+			<ui:remove>INSCRICAO MUNICIPAL</ui:remove>
+		 	<ai:outputLabel 
+	       		for="txtPessoaJuridicaInscricaoMunicipal"
+	       		label="#{msgs['app.pessoaJuridica.inscricaoMunicipal']}"/>
+	       		
+       		<ai:inputText 
+	       		id="txtPessoaJuridicaInscricaoMunicipal"
+	       		label="#{msgs['app.pessoaJuridica.inscricaoMunicipal']}"
+	       		size="30"
+	       		value="#{pessoaJuridicaAppBean.dto.inscricaoMunicipal}"
+	       		maxlength="${func:getHibernateColmumnInfo('pessoaJuridicaAppBean.dto.inscricaoMunicipal','length')}"
+	       		required="${not func:getHibernateColmumnInfo('pessoaJuridicaAppBean.dto.inscricaoMunicipal','nullable')}" />
+	       		
+			<ui:remove>Email</ui:remove>
+	       	<ai:outputLabel 
+	       		for="txtPessoaJuridicaEmail"
+	       		label="#{msgs['app.pessoa.email']}"/>
+	       		
+			<ai:inputTextEmail
+				id="txtPessoaJuridicaEmail"
+				label="#{msgs['app.pessoa.email']}"
+				value="#{pessoaJuridicaAppBean.dto.email}" 
+				maxlength="${func:getHibernateColmumnInfo('pessoaJuridicaAppBean.dto.email','length')}"
+	       		required="${not func:getHibernateColmumnInfo('pessoaJuridicaAppBean.dto.email','nullable')}"/>
+				
+			<ui:remove>Email Faturamento</ui:remove>
+	       	<ai:outputLabel 
+	       		for="txtPessoaJuridicaEmailFaturamento"
+	       		label="#{msgs['app.pessoa.emailFaturamento']}"/>
+	       		
+			<ai:inputTextEmail
+				id="txtPessoaJuridicaEmailFaturamento"
+				label="#{msgs['app.pessoa.emailFaturamento']}"
+				value="#{pessoaJuridicaAppBean.dto.emailFaturamento}"
+				maxlength="${func:getHibernateColmumnInfo('pessoaJuridicaAppBean.dto.emailFaturamento','length')}"
+	       		required="${not func:getHibernateColmumnInfo('pessoaJuridicaAppBean.dto.emailFaturamento','nullable')}"/>
+				
+			<ui:remove>OBSERVACAO</ui:remove>
+	       	<ai:outputLabel 
+	       		for="txtPessoaJuridicaObservacao"
+	       		label="#{msgs['app.pessoa.observacao']}"/>
+
+			<ai:inputTextarea 
+				id="txtPessoaJuridicaObservacao"
+				label="#{msgs['app.pessoa.observacao']}"
+				value="#{pessoaJuridicaAppBean.dto.observacao}"
+	       		required="${not func:getHibernateColmumnInfo('pessoaJuridicaAppBean.dto.observacao','nullable')}"
+				maxlength="${func:getHibernateColmumnInfo('pessoaJuridicaAppBean.dto.observacao','length')}"
+				counter="counterPessoaObservacao"/>
+
+	</ai:panelGridApp> 
+    
+</ui:composition>

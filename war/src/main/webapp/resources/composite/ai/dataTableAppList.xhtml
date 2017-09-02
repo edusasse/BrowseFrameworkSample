@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:func="ai/functions">
+ 
+    <composite:interface>
+		<ui:remove>VALUE</ui:remove>
+    	<composite:attribute name="value" required="false"/>
+    	<ui:remove>VALUE</ui:remove>
+    	<composite:attribute name="noEvents" required="false" type="java.lang.Boolean"/>
+    </composite:interface>
+ 
+    <composite:implementation>
+	
+		<c:if test="#{cc.attrs.value == null}">
+			<p:dataTable
+			 	var="dto"
+			 	value="#{aplicacaoBean.aplicacaoCorrente.getBaseDTOLazyDataModel()}"
+			 	paginator="true"
+			 	rows="#{aplicacaoBean.getLinhasPorPaginaNaLista()}"
+	          	rowsPerPageTemplate="30,50,100"
+	          	paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+	          	filterEvent="enter"  
+	          	lazy="true"
+	          	rowKey="#{dto.id}"
+	          	selection="#{aplicacaoBean.registroSelecionado}" 
+	          	selectionMode="single"
+	          	draggableColumns="false"
+	          	emptyMessage="#{msgs['ai.dataTable.emptyMessage']}"
+	          	resizableColumns="true">
+		
+				<p:ajax 
+					event="rowDblselect" 
+					listener="#{aplicacaoBean.doProcessarListaDuploClique()}"   
+	                update=":all">
+	            </p:ajax>
+	            
+	            <p:ajax 
+					event="rowSelect" 
+					listener="#{aplicacaoBean.doProcessarListaSelecaoDeLinha()}"
+					global="false"
+	                update="@(.actionMenu)">
+	            </p:ajax>
+	            
+	            <p:ajax 
+					event="rowUnselect" 
+					listener="#{aplicacaoBean.doProcessarListaDesSelecaoDeLinha()}"
+					global="false"   
+	                update="@(.actionMenu)">
+	            </p:ajax>
+	                  
+				<composite:insertChildren />
+				
+			</p:dataTable>
+			
+		</c:if>
+		
+		<c:if test="#{cc.attrs.value != null and cc.attrs.noEvents != 'true'}">
+			<p:dataTable
+			 	var="dto"
+			 	value="#{cc.attrs.value}" 
+			 	paginator="true"
+			 	rows="#{aplicacaoBean.getLinhasPorPaginaNaLista()}"
+	          	rowsPerPageTemplate="15,30,50,100"
+	          	paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+	          	filterEvent="enter"  
+	          	lazy="true"
+	          	rowKey="#{dto.id}"
+	          	selection="#{aplicacaoBean.registroSelecionado}" 
+	          	selectionMode="single"
+	          	draggableColumns="true"
+	          	resizableColumns="true">
+		
+				<p:ajax 
+					event="rowDblselect" 
+					listener="#{aplicacaoBean.doProcessarListaDuploClique()}"   
+	                update=":all">
+	            </p:ajax>
+	            
+	            <p:ajax 
+					event="rowSelect" 
+					listener="#{aplicacaoBean.doProcessarListaSelecaoDeLinha()}"
+					global="false"
+	                update="@(.actionMenu)">
+	            </p:ajax>
+	            
+	            <p:ajax 
+					event="rowUnselect" 
+					listener="#{aplicacaoBean.doProcessarListaDesSelecaoDeLinha()}"
+					global="false"   
+	                update="@(.actionMenu)">
+	            </p:ajax>
+	                  
+				<composite:insertChildren />
+				
+			</p:dataTable>
+		</c:if>
+		
+		<c:if test="#{cc.attrs.value != null and cc.attrs.noEvents == 'true'}">
+			<p:dataTable
+			 	var="dto"
+			 	value="#{cc.attrs.value}" 
+			 	paginator="true"
+			 	rows="#{aplicacaoBean.getLinhasPorPaginaNaLista()}"
+	          	rowsPerPageTemplate="15,30,50,100"
+	          	paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+	          	filterEvent="enter"  
+	          	lazy="true"
+	          	rowKey="#{dto.id}"
+	          	selection="#{aplicacaoBean.registroSelecionado}" 
+	          	selectionMode="single"
+	          	draggableColumns="true"
+	          	resizableColumns="true">
+		      
+				<composite:insertChildren />
+				
+			</p:dataTable>
+		</c:if>
+		
+    </composite:implementation>
+ 
+</html>

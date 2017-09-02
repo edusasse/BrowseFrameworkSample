@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:pe="http://primefaces.org/ui/extensions"
+	  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+ 
+    <composite:interface>
+ 
+ 		<ui:remove>columns</ui:remove>
+    	<composite:attribute name="columns" required="false" default="2" />
+    	<ui:remove>style</ui:remove>
+    	<composite:attribute name="style" required="false" default="margin-bottom:10px" />
+    	<ui:remove>cellpadding</ui:remove>
+    	<composite:attribute name="cellpadding" default="5"/>
+  		<ui:remove>noColumns</ui:remove>
+    	<composite:attribute name="noColumns" default="false"/>
+  		
+    </composite:interface>
+ 
+    <composite:implementation>
+	
+		<c:if test="#{cc.attrs.noColumns == 'false'}">
+			<h:panelGrid 
+				columns="#{cc.attrs.columns}"
+				style="#{cc.attrs.style}" 
+				cellpadding="#{cc.attrs.cellpadding}">
+			 
+						<composite:insertChildren />
+				    
+			</h:panelGrid>
+		</c:if>
+		
+		<c:if test="#{cc.attrs.noColumns == 'true'}">
+			<p:panelGrid
+				style="#{cc.attrs.style}" 
+				cellpadding="#{cc.attrs.cellpadding}">
+			 
+						<composite:insertChildren />
+				    
+			</p:panelGrid>
+		</c:if>
+ 
+    </composite:implementation>
+ 
+</html>
