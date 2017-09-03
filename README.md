@@ -1,8 +1,8 @@
 #Browse Framework - Sample
 
-    It is simple application using some of the features from the Browse Framework.
+It is simple application using some of the features from the Browse Framework.
     
-    ![Screenshot](img/screenshot.png)
+![Screenshot](img/screenshot.png)
     
 ## Stack
 
